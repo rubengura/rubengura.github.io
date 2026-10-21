@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
+  <style>
+    .ink { fill: #1d2433; stroke: #1d2433; }
+    .accent { fill: none; stroke: #2747a6; }
+    @media (prefers-color-scheme: dark) {
+      .ink { fill: #e3e5ea; stroke: #e3e5ea; }
+      .accent { stroke: #9db2ff; }
+    }
+  </style>
+  <path class="ink" d="M12 12 18.5 18.5" stroke-width="2.5" fill="none"/>
+  <rect class="ink" x="3" y="3" width="10" height="10" stroke-width="0"/>
+  <circle class="accent" cx="22.5" cy="22.5" r="6.25" stroke-width="2.5"/>
+</svg>

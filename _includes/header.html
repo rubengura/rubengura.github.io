@@ -1,0 +1,23 @@
+{%- assign t = site.data.i18n[page.lang] -%}
+<header class="site-header">
+  <div class="wrap site-header__inner">
+    <a class="wordmark" href="{{ t.urls.home | relative_url }}"{% if page.url == t.urls.home %} aria-current="page"{% endif %}>
+      {%- include robot.html -%}
+      <span>{{ site.handle }}</span>
+    </a>
+    <div class="site-header__tools">
+      <nav class="site-nav" aria-label="{{ t.main_nav }}">
+        <ul>
+          {%- for item in t.nav %}
+          {%- assign current = false %}
+          {%- if page.url == item.url %}{% assign current = 'page' %}
+          {%- elsif page.url contains item.url %}{% assign current = 'true' %}
+          {%- endif %}
+          <li><a href="{{ item.url | relative_url }}"{% if current %} aria-current="{{ current }}"{% endif %}>{{ item.title }}</a></li>
+          {%- endfor %}
+        </ul>
+      </nav>
+      {% include translation.html as="switch" %}
+    </div>
+  </div>
+</header>

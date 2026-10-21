@@ -1,0 +1,18 @@
+{%- comment -%}
+  Project status: planned | in-progress | finished
+  Usage: {% include status.html status=page.status %}
+  The shape carries the meaning (empty, half, full circle), so it doesn't rely on colour.
+{%- endcomment -%}
+{%- assign s = include.status | default: 'planned' -%}
+<span class="status status--{{ s }}">
+  <svg class="status__glyph" viewBox="0 0 12 12" width="12" height="12" aria-hidden="true" focusable="false">
+    {%- if s == 'finished' -%}
+    <circle cx="6" cy="6" r="5"/>
+    {%- elsif s == 'in-progress' -%}
+    <circle cx="6" cy="6" r="4.25" class="status__ring"/><path d="M6 1.75a4.25 4.25 0 0 1 0 8.5z"/>
+    {%- else -%}
+    <circle cx="6" cy="6" r="4.25" class="status__ring"/>
+    {%- endif -%}
+  </svg>
+  {{- site.data.i18n[page.lang].status[s] -}}
+</span>

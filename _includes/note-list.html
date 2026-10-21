@@ -1,0 +1,22 @@
+{%- comment -%}
+  List of notes, newest first.
+  Params: notes (required), limit (optional), level (heading level, default 3),
+          show_topics (default false).
+{%- endcomment -%}
+{%- assign level = include.level | default: 3 -%}
+{%- assign max = include.limit | default: 1000 -%}
+<ul class="entry-list" role="list">
+  {%- for note in include.notes limit: max %}
+  <li class="entry-list__item">
+    <p class="entry-list__meta">
+      <time datetime="{{ note.date | date_to_xmlschema }}">{% include date.html date=note.date %}</time>
+      {%- if note.draft %}<span class="tag">{{ site.data.i18n[page.lang].note.draft }}</span>{% endif %}
+    </p>
+    <h{{ level }} class="entry-list__title" style="view-transition-name: {{ note.url | slugify | prepend: 't-' }}"><a href="{{ note.url | relative_url }}">{{ note.title }}</a></h{{ level }}>
+    <p class="entry-list__desc">{{ note.description }}</p>
+    {%- if include.show_topics and note.topics.size > 0 %}
+    <p class="entry-list__topics">{% include topic-names.html topics=note.topics %}</p>
+    {%- endif %}
+  </li>
+  {%- endfor %}
+</ul>

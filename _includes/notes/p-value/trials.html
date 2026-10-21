@@ -1,0 +1,14 @@
+{%- comment -%}
+  "100 trials of an innocent sugar": simulates 100 studies where H0 is true
+  and counts how many end in a (wrong) conviction at p < 0.05. Drawn by
+  assets/js/notes/p-value.js; hidden without JavaScript.
+{%- endcomment -%}
+{%- assign es = false %}{% if page.lang == 'es-ES' %}{% assign es = true %}{% endif -%}
+<figure class="pv-window pv-trials pv-needs-js" data-pv="trials">
+  <div class="pv-window__bar" aria-hidden="true"><span></span><span></span><span></span><span class="pv-window__title">{% if es %}100_juicios.exe{% else %}100_trials.exe{% endif %}</span></div>
+  <p class="pv-trials__intro">{% if es %}Cien estudios en los que el azúcar es <strong>inocente de verdad</strong> (la hipótesis nula es cierta). Cada casilla es un juicio.{% else %}A hundred studies in which sugar is <strong>truly innocent</strong> (the null hypothesis is true). Each square is a trial.{% endif %}</p>
+  <div class="pv-trials__grid" aria-hidden="true"></div>
+  <p class="pv-trials__summary" aria-live="polite"></p>
+  <button type="button" class="pv-button" data-action="rerun">{% if es %}Repetir los 100 juicios{% else %}Run the 100 trials again{% endif %}</button>
+  <figcaption>{% if es %}Con el umbral de 0.05, alrededor de 5 de cada 100 juicios a un inocente acaban en condena. Es el error de tipo I: el juez no miente, pero tampoco es infalible.{% else %}With a 0.05 threshold, about 5 in every 100 trials of an innocent defendant end in a conviction. That’s a type I error: the judge isn’t lying, but isn’t infallible either.{% endif %}</figcaption>
+</figure>

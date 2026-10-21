@@ -1,0 +1,33 @@
+{%- comment -%}
+  Finds this page's translation (same `ref`, other language) and outputs it
+  as either the language switch in the header or <link rel="alternate"> tags.
+  Pages without a translation link to the other language's home page.
+  Usage: {% include translation.html as="switch" %} or as="links"
+{%- endcomment -%}
+{%- assign here = site.data.i18n[page.lang] -%}
+{%- for pair in site.data.i18n -%}
+  {%- if pair[0] != page.lang %}{% assign other_lang = pair[0] %}{% assign there = pair[1] %}{% endif -%}
+{%- endfor -%}
+{%- assign translation = nil -%}
+{%- if page.ref -%}
+  {%- assign everything = site.pages | concat: site.documents -%}
+  {%- assign translation = everything | where: 'ref', page.ref | where: 'lang', other_lang | first -%}
+{%- endif -%}
+{%- if translation %}{% assign target = translation.url %}{% else %}{% assign target = there.urls.home %}{% endif -%}
+
+{%- if include.as == 'links' -%}
+{%- if translation %}
+<link rel="alternate" hreflang="{{ here.code }}" href="{{ page.url | absolute_url }}">
+<link rel="alternate" hreflang="{{ there.code }}" href="{{ target | absolute_url }}">
+{%- endif %}
+{%- else -%}
+<div class="lang-switch" role="group" aria-label="{{ here.language }}">
+  {%- for pair in site.data.i18n %}
+  {%- if pair[0] == page.lang %}
+  <span class="lang-switch__option" aria-current="true" lang="{{ pair[1].code }}" title="{{ pair[1].name }}">{{ pair[1].code | upcase }}</span>
+  {%- else %}
+  <a class="lang-switch__option" href="{{ target | relative_url }}" hreflang="{{ pair[1].code }}" lang="{{ pair[1].code }}" title="{{ pair[1].switch_label }}"><span aria-hidden="true">{{ pair[1].code | upcase }}</span><span class="visually-hidden">{{ pair[1].switch_label }}</span></a>
+  {%- endif %}
+  {%- endfor %}
+</div>
+{%- endif -%}

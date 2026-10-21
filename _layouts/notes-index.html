@@ -1,0 +1,30 @@
+---
+layout: default
+---
+{%- comment -%}
+  Notes listing grouped by year, in either language. The page supplies the
+  lede and, in front matter, `empty`: the text shown when there are no notes.
+{%- endcomment -%}
+{%- assign notes = site.posts | where: 'lang', page.lang -%}
+{%- assign years = notes | group_by_exp: 'note', "note.date | date: '%Y'" -%}
+<div class="wrap index">
+  <header class="index__header">
+    <h1 class="index__title">{{ page.title }}</h1>
+    <div class="index__lede">
+      {{ content }}
+    </div>
+  </header>
+
+  {%- if notes.size == 0 %}
+  <p class="index__empty">{{ page.empty }}</p>
+  {%- endif %}
+
+  {%- for year in years %}
+  <section class="index__group" aria-labelledby="year-{{ year.name }}">
+    <h2 id="year-{{ year.name }}" class="index__key">{{ year.name }}</h2>
+    <div class="index__entries">
+      {% include note-list.html notes=year.items level=3 show_topics=true %}
+    </div>
+  </section>
+  {%- endfor %}
+</div>

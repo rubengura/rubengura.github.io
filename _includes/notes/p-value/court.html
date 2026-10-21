@@ -1,0 +1,25 @@
+{%- comment -%}
+  Interactive court for the p-value note: a slider for the difference in
+  mean BMI, the distribution of differences if sugar were innocent (H0), the
+  shaded p-value and the verdict. Drawn by assets/js/notes/p-value.js;
+  hidden without JavaScript. Data: _data/p_value_study.yml.
+{%- endcomment -%}
+{%- assign es = false %}{% if page.lang == 'es-ES' %}{% assign es = true %}{% endif -%}
+{%- assign study = site.data.p_value_study -%}
+<figure class="pv-window pv-court pv-needs-js" data-pv="court" data-se="{{ study.se }}" data-observed="{{ study.difference }}">
+  <div class="pv-window__bar" aria-hidden="true"><span></span><span></span><span></span><span class="pv-window__title">{% if es %}tribunal.exe{% else %}court.exe{% endif %}</span></div>
+  <svg class="pv-court__chart" viewBox="0 0 600 230" aria-hidden="true"></svg>
+  <div class="pv-court__controls">
+    <label for="pv-diff">{% if es %}Diferencia entre las medias de IMC{% else %}Difference between mean BMI{% endif %}</label>
+    <input type="range" id="pv-diff" min="0" max="8" step="0.05" value="{{ study.difference }}">
+    <output for="pv-diff" class="pv-court__value">{{ study.difference }}</output>
+  </div>
+  <div class="pv-court__readout">
+    <p><span class="pv-court__key">t</span> <span data-out="t">–</span></p>
+    <p><span class="pv-court__key">p</span> <span data-out="p">–</span></p>
+    <p class="pv-court__verdict" data-out="verdict" aria-live="polite"></p>
+    <span class="pv-gavel" aria-hidden="true"></span>
+  </div>
+  <button type="button" class="pv-button" data-action="study">{% if es %}Volver a los datos del estudio{% else %}Back to the study’s data{% endif %}</button>
+  <figcaption>{% if es %}Mueve el deslizador. La curva muestra las diferencias que veríamos <strong>si el azúcar fuera inocente</strong> (hipótesis nula); la zona sombreada es el valor p: la probabilidad de una diferencia igual o más extrema que la elegida. Por debajo de 0.05, el juez condena. Error típico {{ study.se | round: 2 }}, aproximación normal (gl ≈ {{ study.df }}).{% else %}Move the slider. The curve shows the differences we’d see <strong>if sugar were innocent</strong> (the null hypothesis); the shaded area is the p-value: the probability of a difference as extreme as the one chosen, or more. Below 0.05, the judge convicts. Standard error {{ study.se | round: 2 }}, normal approximation (df ≈ {{ study.df }}).{% endif %}</figcaption>
+</figure>

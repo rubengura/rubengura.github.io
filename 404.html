@@ -1,0 +1,26 @@
+---
+ref: not-found
+title: Page not found
+description: There is no page at this address.
+permalink: /404.html
+layout: default
+sitemap: false
+noindex: true
+achievement: off-the-map   # unlocks an achievement (assets/js/site.js)
+---
+<div class="wrap entry">
+  <header class="entry__header">
+    <h1 class="entry__title">Page not found</h1>
+    <p class="entry__lede">There’s nothing at this address. If you followed a link, the page may have moved when the site was rebuilt.</p>
+  </header>
+  <div class="entry__body prose">
+    <p>These are the main sections:</p>
+    <ul>
+      <li><a href="{{ '/' | relative_url }}">Home</a></li>
+      <li><a href="{{ '/lab/' | relative_url }}">Engineering Lab</a>, projects and how they were built</li>
+      <li><a href="{{ '/notes/' | relative_url }}">Notes &amp; Ideas</a>, everything I’ve written</li>
+      <li><a href="{{ '/about/' | relative_url }}">About</a></li>
+    </ul>
+    <p lang="es">¿Buscabas la versión en castellano? Empieza por la <a href="{{ '/es/' | relative_url }}">portada en castellano</a>.</p>
+  </div>
+</div>

@@ -1,0 +1,20 @@
+{%- comment -%}
+  List of Engineering Lab projects.
+  Params: projects (required), level (heading level, default 3),
+          show_status (default true; pass false when the list is already grouped by status).
+{%- endcomment -%}
+{%- assign level = include.level | default: 3 -%}
+<ul class="entry-list" role="list">
+  {%- for project in include.projects %}
+  <li class="entry-list__item">
+    <h{{ level }} class="entry-list__title" style="view-transition-name: {{ project.url | slugify | prepend: 't-' }}"><a href="{{ project.url | relative_url }}">{{ project.title }}</a></h{{ level }}>
+    <p class="entry-list__desc">{{ project.description }}</p>
+    {%- if include.show_status != false or project.stack.size > 0 %}
+    <p class="entry-list__meta">
+      {%- if include.show_status != false %}{% include status.html status=project.status %}{% endif -%}
+      {%- if project.stack.size > 0 %}<span>{{ project.stack | join: ', ' }}</span>{% endif -%}
+    </p>
+    {%- endif %}
+  </li>
+  {%- endfor %}
+</ul>

@@ -1,0 +1,52 @@
+# Topics used to label notes (front matter: `topics: [data-engineering, futures]`).
+# The home page lists them under "What I write about", in this order, each with
+# its icon from _includes/topic-icon.html.
+# Add a new one here (in both languages, with an icon) before using it in a note.
+
+- id: data-engineering
+  name:
+    en-GB: Data engineering
+    es-ES: Ingeniería de datos
+  description:
+    en-GB: Pipelines, modelling, data quality and the everyday craft of building data systems.
+    es-ES: Pipelines, modelado, calidad de datos y el oficio diario de construir sistemas de datos.
+
+- id: learning
+  name:
+    en-GB: Learning notes
+    es-ES: Notas de aprendizaje
+  description:
+    en-GB: Concepts I'm working through, written down until I understand them.
+    es-ES: Conceptos con los que estoy peleándome, escritos hasta que los entiendo.
+
+- id: psychology
+  name:
+    en-GB: Psychology and technology
+    es-ES: Psicología y tecnología
+  description:
+    en-GB: How people read numbers, make decisions and live with the systems we build.
+    es-ES: Cómo leemos los números, cómo decidimos y cómo convivimos con los sistemas que construimos.
+
+- id: ai-society
+  name:
+    en-GB: AI and society
+    es-ES: IA y sociedad
+  description:
+    en-GB: What changes when software starts to make judgements, and who it changes things for.
+    es-ES: Qué cambia cuando el software empieza a emitir juicios, y para quién cambia.
+
+- id: futures
+  name:
+    en-GB: Science fiction and futures
+    es-ES: Ciencia ficción y futuros
+  description:
+    en-GB: Stories and scenarios as tools for thinking about what could come next.
+    es-ES: Historias y escenarios como herramientas para pensar en lo que podría venir.
+
+- id: reading
+  name:
+    en-GB: Reading
+    es-ES: Lecturas
+  description:
+    en-GB: Books and other works worth taking notes on.
+    es-ES: Libros y otras obras que merecen unas notas.

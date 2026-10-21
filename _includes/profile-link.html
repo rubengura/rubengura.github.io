@@ -1,0 +1,12 @@
+{%- comment -%}
+  Renders a profile URL from `site.social.links` with a readable label.
+  Usage: {% include profile-link.html url="https://github.com/rubengura" %}
+{%- endcomment -%}
+{%- assign url = include.url -%}
+{%- if url contains 'github.com' -%}{%- assign label = 'GitHub' -%}
+{%- elsif url contains 'linkedin.com' -%}{%- assign label = 'LinkedIn' -%}
+{%- elsif url contains 'medium.com' -%}{%- assign label = 'Medium' -%}
+{%- elsif url contains 'rpubs.com' -%}{%- assign label = 'RPubs' -%}
+{%- else -%}{%- assign label = url | remove: 'https://' | remove: 'www.' | split: '/' | first -%}
+{%- endif -%}
+<a href="{{ url }}" rel="me">{{ label }}</a>

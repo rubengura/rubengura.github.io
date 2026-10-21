@@ -1,0 +1,63 @@
+---
+layout: default
+---
+{%- assign t = site.data.i18n[page.lang].project -%}
+<article class="wrap entry" data-reading="project">
+  <header class="entry__header">
+    <h1 class="entry__title" style="view-transition-name: {{ page.url | slugify | prepend: 't-' }}">{{ page.title }}</h1>
+    {%- if page.description %}
+    <p class="entry__lede">{{ page.description }}</p>
+    {%- endif %}
+  </header>
+
+  <aside class="entry__meta" aria-label="{{ t.details }}">
+    <dl class="meta">
+      <div>
+        <dt>{{ t.status }}</dt>
+        <dd>{% include status.html status=page.status %}</dd>
+      </div>
+      {%- if page.started %}
+      <div>
+        <dt>{{ t.started }}</dt>
+        <dd><time datetime="{{ page.started | date_to_xmlschema }}">{% include date.html date=page.started format="month" %}</time></dd>
+      </div>
+      {%- endif %}
+      {%- if page.updated %}
+      <div>
+        <dt>{{ t.updated }}</dt>
+        <dd><time datetime="{{ page.updated | date_to_xmlschema }}">{% include date.html date=page.updated %}</time></dd>
+      </div>
+      {%- endif %}
+      {%- if page.stack.size > 0 %}
+      <div>
+        <dt>{{ t.stack }}</dt>
+        <dd>{{ page.stack | join: ', ' }}</dd>
+      </div>
+      {%- endif %}
+      {%- if page.repo %}
+      <div>
+        <dt>{{ t.code }}</dt>
+        <dd><a href="{{ page.repo }}">{{ t.repository }}</a></dd>
+      </div>
+      {%- endif %}
+      {%- if page.demo %}
+      <div>
+        <dt>{{ t.demo }}</dt>
+        <dd><a href="{{ page.demo }}">{{ t.live_demo }}</a></dd>
+      </div>
+      {%- endif %}
+    </dl>
+  </aside>
+
+  <div class="entry__body">
+    {%- if page.status == 'planned' %}
+    <p class="notice">{{ t.planned_notice }}</p>
+    {%- elsif page.status == 'in-progress' %}
+    <p class="notice">{{ t.in_progress_notice }}</p>
+    {%- endif %}
+    <div class="prose">
+      {{ content }}
+    </div>
+    {% include related.html %}
+  </div>
+</article>

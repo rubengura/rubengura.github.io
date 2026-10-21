@@ -1,0 +1,47 @@
+{%- comment -%}
+  One icon per topic in _data/topics.yml, drawn with the mark's shapes:
+  squares are systems (ink), circles are ideas (accent).
+  Usage: {% include topic-icon.html id=topic.id %}
+{%- endcomment -%}
+<svg class="topic-icon" viewBox="0 0 32 32" width="32" height="32" aria-hidden="true" focusable="false">
+{%- case include.id -%}
+  {%- when 'data-engineering' -%}
+  {%- comment %} A pipeline: raw data, a model, an answer {% endcomment -%}
+  <path class="topic-icon__line" d="M10 16h4M21 16h3"/>
+  <rect class="topic-icon__system" x="3" y="12.5" width="7" height="7"/>
+  <rect class="topic-icon__line" x="14" y="12.5" width="7" height="7"/>
+  <circle class="topic-icon__idea" cx="27" cy="16" r="3"/>
+  {%- when 'learning' -%}
+  {%- comment %} A page of notes, with an idea taking shape {% endcomment -%}
+  <path class="topic-icon__line" d="M7 4h13l5 5v19H7z"/>
+  <path class="topic-icon__line" d="M11 12h7M11 17h10M11 22h4"/>
+  <circle class="topic-icon__idea" cx="20" cy="22" r="2.5"/>
+  {%- when 'psychology' -%}
+  {%- comment %} An eye: how people read what systems show them {% endcomment -%}
+  <path class="topic-icon__line" d="M3 16c3.5-5.5 8-8 13-8s9.5 2.5 13 8c-3.5 5.5-8 8-13 8S6.5 21.5 3 16z"/>
+  <circle class="topic-icon__idea" cx="16" cy="16" r="4.5"/>
+  <rect class="topic-icon__system" x="14.5" y="14.5" width="3" height="3"/>
+  {%- when 'ai-society' -%}
+  {%- comment %} A model connected to the people around it {% endcomment -%}
+  <path class="topic-icon__line" d="M12 12 8.1 8.1M20 12l3.9-3.9M12 20l-3.9 3.9M20 20l3.9 3.9"/>
+  <rect class="topic-icon__system" x="12" y="12" width="8" height="8"/>
+  <circle class="topic-icon__idea" cx="6" cy="6" r="3"/>
+  <circle class="topic-icon__idea" cx="26" cy="6" r="3"/>
+  <circle class="topic-icon__idea" cx="6" cy="26" r="3"/>
+  <circle class="topic-icon__idea" cx="26" cy="26" r="3"/>
+  {%- when 'futures' -%}
+  {%- comment %} One present, several possible futures {% endcomment -%}
+  <path class="topic-icon__line" d="M9 16h5l9.7-8.1M14 16h9"/>
+  <path class="topic-icon__line topic-icon__line--dashed" d="M14 16l9.7 8.1"/>
+  <rect class="topic-icon__system" x="3" y="13" width="6" height="6"/>
+  <circle class="topic-icon__idea" cx="26" cy="6" r="3"/>
+  <circle class="topic-icon__idea" cx="26" cy="16" r="3"/>
+  <circle class="topic-icon__idea" cx="26" cy="26" r="3"/>
+  {%- when 'reading' -%}
+  {%- comment %} An open book {% endcomment -%}
+  <path class="topic-icon__line" d="M16 9c-3-2.5-7.5-3-12-2v17c4.5-1 9-.5 12 2 3-2.5 7.5-3 12-2V7c-4.5-1-9-.5-12 2zM16 9v17"/>
+  <path class="topic-icon__idea" d="M19.5 13.5h5M19.5 18h5"/>
+  {%- else -%}
+  <circle class="topic-icon__idea" cx="16" cy="16" r="6"/>
+{%- endcase -%}
+</svg>

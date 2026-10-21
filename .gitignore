@@ -1,0 +1,21 @@
+# Jekyll build output and caches
+_site/
+.jekyll-cache/
+.jekyll-metadata
+.sass-cache/
+
+# Ruby / Bundler (gems installed locally with `bundle config set path vendor/bundle`)
+vendor/
+.bundle/
+
+# Python
+__pycache__/
+
+# OS and editor files
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+# Personal editor workspace
+*.code-workspace

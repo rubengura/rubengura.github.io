@@ -1,0 +1,52 @@
+---
+layout: default
+---
+{%- comment -%}
+  Home page, in either language. The page supplies the introduction as its
+  content; everything else comes from _data/i18n.yml.
+{%- endcomment -%}
+{%- assign t = site.data.i18n[page.lang] -%}
+{%- assign featured = site.projects | where: 'lang', page.lang | where: 'featured', true | sort: 'order', 'last' -%}
+{%- assign notes = site.posts | where: 'lang', page.lang -%}
+<div class="wrap home">
+
+  <section class="hero" aria-labelledby="hero-title">
+    <h1 id="hero-title" class="hero__title">
+      <span class="hero__line hero__line--systems">{{ t.headline.systems }}</span>
+      <span class="hero__line hero__line--ideas">{{ t.headline.ideas }}</span>
+    </h1>
+    <div class="hero__figure" aria-hidden="true"></div>
+    <div class="hero__intro">
+      {{ content }}
+    </div>
+  </section>
+
+  <div class="split">
+    <section class="split__col" aria-labelledby="home-lab">
+      <h2 id="home-lab" class="split__title"><a href="{{ t.urls.lab | relative_url }}">{{ t.home.lab_title | escape }}</a></h2>
+      <p class="split__lede">{{ t.home.lab_lede }}</p>
+      {% include project-list.html projects=featured level=3 %}
+      <p class="split__more"><a href="{{ t.urls.lab | relative_url }}">{{ t.home.lab_more }}</a></p>
+    </section>
+
+    <section class="split__col" aria-labelledby="home-notes">
+      <h2 id="home-notes" class="split__title"><a href="{{ t.urls.notes | relative_url }}">{{ t.home.notes_title | escape }}</a></h2>
+      <p class="split__lede">{{ t.home.notes_lede }}</p>
+      {% include note-list.html notes=notes limit=3 level=3 %}
+      <p class="split__more"><a href="{{ t.urls.notes | relative_url }}">{{ t.home.notes_more }}</a></p>
+    </section>
+  </div>
+
+  <section class="topics" aria-labelledby="home-topics">
+    <h2 id="home-topics" class="topics__title">{{ t.home.topics_title }}</h2>
+    <dl class="topics__list">
+      {%- for topic in site.data.topics %}
+      <div class="topics__item">
+        <dt><span class="topics__icon">{% include topic-icon.html id=topic.id %}</span>{{ topic.name[page.lang] }}</dt>
+        <dd>{{ topic.description[page.lang] }}</dd>
+      </div>
+      {%- endfor %}
+    </dl>
+  </section>
+
+</div>

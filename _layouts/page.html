@@ -1,0 +1,14 @@
+---
+layout: default
+---
+<article class="wrap entry">
+  <header class="entry__header">
+    <h1 class="entry__title">{{ page.title }}</h1>
+    {%- if page.lede %}
+    <p class="entry__lede">{{ page.lede }}</p>
+    {%- endif %}
+  </header>
+  <div class="entry__body prose">
+    {{ content }}
+  </div>
+</article>

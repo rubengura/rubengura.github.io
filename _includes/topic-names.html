@@ -1,0 +1,8 @@
+{%- comment -%}
+  Turns topic ids into readable names from _data/topics.yml, in the page's language.
+  Usage: {% include topic-names.html topics=page.topics %}
+{%- endcomment -%}
+{%- for id in include.topics -%}
+  {%- assign topic = site.data.topics | where: 'id', id | first -%}
+  {{ topic.name[page.lang] | default: id }}{% unless forloop.last %}, {% endunless %}
+{%- endfor -%}

@@ -1,0 +1,12 @@
+{%- comment -%}
+  A date in the page's language. Plain `date` filters only know English months.
+  Its variables are prefixed with date_ because includes share the page’s scope.
+  Usage: {% include date.html date=page.date %}            → 20 October 2026 / 20 de octubre de 2026
+         {% include date.html date=page.started format="month" %} → October 2026 / octubre de 2026
+{%- endcomment -%}
+{%- assign date_t = site.data.i18n[page.lang] -%}
+{%- assign date_m = include.date | date: '%-m' | minus: 1 -%}
+{%- if include.format == 'month' -%}{%- assign date_pattern = date_t.month_format -%}{%- else -%}{%- assign date_pattern = date_t.date_format -%}{%- endif -%}
+{%- assign date_d = include.date | date: '%-d' -%}
+{%- assign date_y = include.date | date: '%Y' -%}
+{{- date_pattern | replace: '[d]', date_d | replace: '[m]', date_t.months[date_m] | replace: '[y]', date_y -}}

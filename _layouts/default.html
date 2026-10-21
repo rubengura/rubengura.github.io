@@ -1,0 +1,14 @@
+<!doctype html>
+<html lang="{{ page.lang | default: site.lang | default: 'en' }}">
+<head>
+{% include head.html %}
+</head>
+<body{% if page.achievement %} data-achievement="{{ page.achievement }}"{% endif %}>
+  <a class="skip-link" href="#main">{{ site.data.i18n[page.lang].skip_link }}</a>
+  {% include header.html %}
+  <main id="main" class="site-main" tabindex="-1">
+    {{ content }}
+  </main>
+  {% include footer.html %}
+</body>
+</html>

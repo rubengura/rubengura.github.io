@@ -1,0 +1,28 @@
+---
+layout: default
+---
+{%- comment -%}
+  Engineering Lab listing, in either language. The page supplies the lede.
+{%- endcomment -%}
+{%- assign groups = 'in-progress,finished,planned' | split: ',' -%}
+{%- assign all = site.projects | where: 'lang', page.lang -%}
+<div class="wrap index">
+  <header class="index__header">
+    <h1 class="index__title">{{ page.title }}</h1>
+    <div class="index__lede">
+      {{ content }}
+    </div>
+  </header>
+
+  {%- for group in groups %}
+  {%- assign projects = all | where: 'status', group | sort: 'order', 'last' %}
+  {%- if projects.size > 0 %}
+  <section class="index__group" aria-labelledby="status-{{ group }}">
+    <h2 id="status-{{ group }}" class="index__key">{% include status.html status=group %}</h2>
+    <div class="index__entries">
+      {% include project-list.html projects=projects level=3 show_status=false %}
+    </div>
+  </section>
+  {%- endif %}
+  {%- endfor %}
+</div>

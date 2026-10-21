@@ -1,0 +1,15 @@
+{%- comment -%}
+  Related links listed under a note or project (front matter `related:`).
+  Each item needs `title` and `url`; internal URLs start with "/".
+{%- endcomment -%}
+{%- if page.related and page.related.size > 0 %}
+<section class="related" aria-labelledby="related-heading">
+  <h2 id="related-heading" class="related__title">{{ site.data.i18n[page.lang].related }}</h2>
+  <ul class="related__list">
+    {%- for item in page.related %}
+    {%- if item.url contains '://' %}{% assign href = item.url %}{% else %}{% assign href = item.url | relative_url %}{% endif %}
+    <li><a href="{{ href }}">{{ item.title }}</a></li>
+    {%- endfor %}
+  </ul>
+</section>
+{%- endif %}

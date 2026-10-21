@@ -1,0 +1,50 @@
+---
+layout: default
+---
+{%- assign t = site.data.i18n[page.lang].note -%}
+{%- assign words = content | strip_html | number_of_words -%}
+{%- assign minutes = words | plus: 110 | divided_by: 220 -%}
+{%- if minutes < 1 %}{% assign minutes = 1 %}{% endif -%}
+<article class="wrap entry" data-reading="note">
+  <header class="entry__header">
+    <h1 class="entry__title" style="view-transition-name: {{ page.url | slugify | prepend: 't-' }}">{{ page.title }}</h1>
+    {%- if page.description %}
+    <p class="entry__lede">{{ page.description }}</p>
+    {%- endif %}
+  </header>
+
+  <aside class="entry__meta" aria-label="{{ t.about }}">
+    <dl class="meta">
+      <div>
+        <dt>{{ t.published }}</dt>
+        <dd><time datetime="{{ page.date | date_to_xmlschema }}">{% include date.html date=page.date %}</time></dd>
+      </div>
+      {%- if page.updated %}
+      <div>
+        <dt>{{ t.updated }}</dt>
+        <dd><time datetime="{{ page.updated | date_to_xmlschema }}">{% include date.html date=page.updated %}</time></dd>
+      </div>
+      {%- endif %}
+      <div>
+        <dt>{{ t.reading_time }}</dt>
+        <dd>{{ minutes }} min</dd>
+      </div>
+      {%- if page.topics.size > 0 %}
+      <div>
+        <dt>{{ t.topics }}</dt>
+        <dd>{% include topic-names.html topics=page.topics %}</dd>
+      </div>
+      {%- endif %}
+    </dl>
+  </aside>
+
+  <div class="entry__body">
+    {%- if page.draft %}
+    <p class="notice"><strong>{{ t.draft }}.</strong> {{ page.notice | default: t.draft_notice }}</p>
+    {%- endif %}
+    <div class="prose">
+      {{ content }}
+    </div>
+    {% include related.html %}
+  </div>
+</article>

@@ -1,0 +1,135 @@
+# Interface text in each language. The keys match the `lang` of each page
+# (en-GB by default, es-ES for everything under /es/ and _projects/es/).
+# Page content itself lives in the pages: English at the root, Spanish under /es/.
+
+en-GB:
+  code: en
+  name: English
+  switch_label: Read in English
+  tagline: Data engineer
+  headline:
+    systems: Building reliable systems.
+    ideas: Exploring complex ideas.
+  urls:
+    home: /
+    lab: /lab/
+    notes: /notes/
+    about: /about/
+    feed: /feed.xml
+  nav:
+    - title: Lab
+      url: /lab/
+    - title: Notes
+      url: /notes/
+    - title: About
+      url: /about/
+  skip_link: Skip to content
+  main_nav: Main
+  language: Language
+  home:
+    lab_title: Engineering Lab
+    lab_lede: Small projects, documented with the decisions behind them.
+    lab_more: All projects
+    notes_title: Notes & Ideas
+    notes_lede: What I’m learning, and what I keep thinking about.
+    notes_more: All notes
+    topics_title: What I write about
+  note:
+    about: About this note
+    published: Published
+    updated: Updated
+    reading_time: Reading time
+    topics: Topics
+    draft: Draft
+    draft_notice: This note is unfinished and will probably change.
+  project:
+    details: Project details
+    status: Status
+    started: Started
+    updated: Last updated
+    stack: Stack
+    code: Code
+    repository: Repository
+    demo: Demo
+    live_demo: Live demo
+    planned_notice: "<strong>Not built yet.</strong> This page describes the problem and what I want to learn from it. Architecture, decisions and results will be added as the work happens."
+    in_progress_notice: "<strong>Work in progress.</strong> Some sections are incomplete and the design may still change."
+  status:
+    planned: Planned
+    in-progress: In progress
+    finished: Finished
+  related: Related
+  footer:
+    feed: Notes feed (RSS)
+    colophon: Written in Markdown, built with Jekyll and hosted on GitHub Pages.
+    source: Source on GitHub
+  feed_title: Notes
+  months: [January, February, March, April, May, June, July, August, September, October, November, December]
+  date_format: "[d] [m] [y]"
+  month_format: "[m] [y]"
+
+es-ES:
+  code: es
+  name: Castellano
+  switch_label: Leer en castellano
+  tagline: Ingeniero de datos
+  headline:
+    systems: Construyo sistemas fiables.
+    ideas: Exploro ideas complejas.
+  urls:
+    home: /es/
+    lab: /es/lab/
+    notes: /es/notas/
+    about: /es/sobre-mi/
+    feed: /es/feed.xml
+  nav:
+    - title: Lab
+      url: /es/lab/
+    - title: Notas
+      url: /es/notas/
+    - title: Sobre mí
+      url: /es/sobre-mi/
+  skip_link: Saltar al contenido
+  main_nav: Principal
+  language: Idioma
+  home:
+    lab_title: Engineering Lab
+    lab_lede: Proyectos pequeños, documentados con las decisiones que hay detrás.
+    lab_more: Todos los proyectos
+    notes_title: Notas e ideas
+    notes_lede: Lo que estoy aprendiendo y lo que no dejo de darle vueltas.
+    notes_more: Todas las notas
+    topics_title: Sobre qué escribo
+  note:
+    about: Sobre esta nota
+    published: Publicada
+    updated: Actualizada
+    reading_time: Tiempo de lectura
+    topics: Temas
+    draft: Borrador
+    draft_notice: Esta nota está sin terminar y probablemente cambie.
+  project:
+    details: Detalles del proyecto
+    status: Estado
+    started: Empezado
+    updated: Última actualización
+    stack: Stack
+    code: Código
+    repository: Repositorio
+    demo: Demo
+    live_demo: Demo en vivo
+    planned_notice: "<strong>Todavía sin construir.</strong> Esta página describe el problema y lo que quiero aprender de él. La arquitectura, las decisiones y los resultados se irán añadiendo a medida que avance el trabajo."
+    in_progress_notice: "<strong>En curso.</strong> Algunas secciones están incompletas y el diseño todavía puede cambiar."
+  status:
+    planned: Planificado
+    in-progress: En curso
+    finished: Terminado
+  related: Relacionado
+  footer:
+    feed: Feed de notas (RSS)
+    colophon: Escrita en Markdown, generada con Jekyll y alojada en GitHub Pages.
+    source: Código fuente en GitHub
+  feed_title: Notas
+  months: [enero, febrero, marzo, abril, mayo, junio, julio, agosto, septiembre, octubre, noviembre, diciembre]
+  date_format: "[d] de [m] de [y]"
+  month_format: "[m] de [y]"

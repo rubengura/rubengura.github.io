@@ -1,0 +1,116 @@
+# -----------------------------------------------------------------------------
+# Site configuration
+#
+# GitHub Pages builds this site with Jekyll on every push to `master`.
+# Changes to this file need a restart of `bundle exec jekyll serve` locally.
+# -----------------------------------------------------------------------------
+
+# Identity --------------------------------------------------------------------
+title: Rubén Guerrero          # site name: browser tab, search results, link previews
+handle: rubengura              # wordmark in the header
+tagline: Data engineer         # home page <title>: "Rubén Guerrero | Data engineer"
+description: >-
+  Rubén Guerrero is a data engineer with a background in psychology. Engineering
+  projects written up with their trade-offs, and notes on data, psychology,
+  AI and possible futures.
+# The home page headline and all other interface text, in both languages,
+# are in _data/i18n.yml.
+
+author:
+  name: Rubén Guerrero
+  url: https://rubengura.github.io/
+
+# Profiles shown in the footer and the About page, and declared to search
+# engines (jekyll-seo-tag). Add your LinkedIn URL here when you have it.
+social:
+  name: Rubén Guerrero
+  links:
+    - https://github.com/rubengura
+    # - https://www.linkedin.com/in/your-profile/
+
+repository_url: https://github.com/rubengura/rubengura.github.io
+
+# URLs ------------------------------------------------------------------------
+url: https://rubengura.github.io
+baseurl: ""
+lang: en-GB                    # default language; Spanish pages live under /es/
+timezone: Europe/Madrid
+# Navigation is in _data/i18n.yml, one list per language.
+
+# Content ---------------------------------------------------------------------
+# Notes live in _posts/ and are published at /notes/<file-name-without-date>/
+# Spanish notes live in es/_posts/ and are published at /es/notas/<...>/
+permalink: /notes/:title/
+
+# Engineering Lab projects live in _projects/ and are published at /lab/<file-name>/
+# Spanish projects live in _projects/es/ and are published at /es/lab/<file-name>/
+collections:
+  projects:
+    output: true
+    permalink: /lab/:name/
+
+# Every page has a `lang` (en-GB or es-ES). A translation shares the same `ref`
+# as the original, which is how the language switch finds it.
+defaults:
+  # From general to specific: Jekyll lets a later, more specific scope win
+  # only if it comes after the general ones.
+  - scope:
+      path: ""
+    values:
+      layout: page
+      image: /assets/img/og-default.png
+      lang: en-GB
+  - scope:
+      path: ""
+      type: posts
+    values:
+      layout: note
+  - scope:
+      path: ""
+      type: projects
+    values:
+      layout: project
+  - scope:
+      path: "es"
+    values:
+      lang: es-ES
+  - scope:
+      path: "es"
+      type: posts
+    values:
+      permalink: /es/notas/:title/
+  - scope:
+      path: "_projects/es"
+      type: projects
+    values:
+      lang: es-ES
+      permalink: /es/lab/:name/
+
+# Build -----------------------------------------------------------------------
+markdown: kramdown
+kramdown:
+  input: GFM
+  hard_wrap: false
+  syntax_highlighter: rouge
+  footnote_backlink: "&#8617;&#xfe0e;"   # text-style return arrow (no emoji on iOS)
+highlighter: rouge
+
+# Only plugins supported by GitHub Pages (https://pages.github.com/versions/).
+# The feeds are plain templates (feed.xml, es/feed.xml) rather than jekyll-feed,
+# which can't keep one feed per language.
+plugins:
+  - jekyll-seo-tag
+  - jekyll-sitemap
+
+# Files that are part of the repository but not of the website.
+exclude:
+  - README.md
+  - docs/
+  - scripts/
+  - Gemfile
+  - Gemfile.lock
+  - vendor/
+  - .bundle/
+  - .jekyll-cache/
+  - .sass-cache/
+  - node_modules/
