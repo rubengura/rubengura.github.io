@@ -149,6 +149,30 @@
   --shadow-float: 0 0 24px -8px rgb(45 224 200 / 0.35);
 }
 
+/* Day mode: the same teal identity on light paper. Night is the default;
+   the switch in the header sets data-theme="day" (assets/js/site.js, and
+   an inline script in head.html so there's no flash on load).
+   Contrast on --paper: ink 13.9:1, phosphor 5.5:1, phosphor-dim 6.9:1,
+   graphite 6:1, accent 5.3:1, cyan 5.9:1, magenta 6:1, rule-strong 3.5:1. */
+:root[data-theme="day"] {
+  color-scheme: light;
+  --paper: #f4fbf9;
+  --ink: #0f2e2a;
+  --phosphor: #0a7366;
+  --phosphor-dim: #1d6158;
+  --graphite: #456662;
+  --rule: #d3e6e2;
+  --rule-strong: #6b8d87;
+  --accent: #9a5800;
+  --accent-hover: #784400;
+  --cyan: #0565a0;
+  --magenta: #ad2c6b;
+  --highlight: #0a7366;
+  --tint: #e4f2ef;
+  --glow: none;
+  --shadow-float: 0 10px 28px -12px rgb(15 46 42 / 0.4);
+}
+
 
 
 /* 3. Base ----------------------------------------------------------------- */
@@ -259,6 +283,11 @@ body::after {
   body::after {
     display: none;
   }
+}
+
+/* No scan lines on paper */
+:root[data-theme="day"] body::after {
+  display: none;
 }
 
 img {
@@ -506,6 +535,12 @@ abbr[title] {
   gap: var(--space-2) var(--space-5);
 }
 
+.site-header__switches {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
 .site-nav ul {
   display: flex;
   gap: var(--space-5);
@@ -548,6 +583,46 @@ abbr[title] {
   border-radius: 999px;
   color: var(--graphite);
   text-decoration: none;
+}
+
+/* Night / day switch: same shape as the language switch */
+.theme-switch {
+  display: inline-flex;
+  padding: 2px;
+  border: 1px solid var(--rule-strong);
+  border-radius: 999px;
+}
+
+.theme-switch__option {
+  display: grid;
+  place-items: center;
+  width: 1.9rem;
+  height: 1.55rem;
+  padding: 0;
+  border: 0;
+  border-radius: 999px;
+  background: transparent;
+  color: var(--graphite);
+  cursor: pointer;
+}
+
+.theme-switch__option svg {
+  width: 0.95rem;
+  height: 0.95rem;
+}
+
+.theme-switch__option:hover {
+  background: var(--tint);
+  color: var(--accent);
+}
+
+.theme-switch__option[aria-pressed="true"] {
+  background: var(--phosphor);
+  color: var(--paper);
+}
+
+html:not(.js) .theme-switch {
+  display: none;
 }
 
 .lang-switch__option[aria-current] {
@@ -1363,6 +1438,19 @@ html:not(.js) .hero__figure {
 
   .site-header {
     view-transition-name: site-header;
+  }
+
+  /* Changing theme: the whole page is one snapshot, revealed in a circle
+     from the switch (assets/js/site.js), without the page-change fade. */
+  :root.is-theming .site-header,
+  :root.is-theming [style*="view-transition-name"] {
+    view-transition-name: none !important;
+  }
+
+  :root.is-theming::view-transition-old(root),
+  :root.is-theming::view-transition-new(root) {
+    animation: none;
+    mix-blend-mode: normal;
   }
 
   ::view-transition-old(root) {

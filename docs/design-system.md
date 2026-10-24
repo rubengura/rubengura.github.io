@@ -15,7 +15,7 @@ On top of that, a layer of play (see *Motion and play* below). It reuses the sam
 
 ## Colour
 
-An old terminal with a teal phosphor: pale mint and teal on near-black, with amber (teal's complement) as the accent. Sky blue and magenta are signals, used sparingly so the page isn't monochrome without becoming noisy. One theme only; print switches to black on white.
+An old terminal with a teal phosphor: pale mint and teal on near-black, with amber (teal's complement) as the accent. Sky blue and magenta are signals, used sparingly so the page isn't monochrome without becoming noisy. Night is the default, with a day mode (below); print switches to black on white.
 
 | Token | Value | Use |
 |---|---|---|
@@ -32,7 +32,27 @@ An old terminal with a teal phosphor: pale mint and teal on near-black, with amb
 | `--highlight` | `#2de0c8` | Text selection and `<mark>`, with `--paper` text |
 | `--tint` | `#0b1817` | Notices, code, icon tiles, panels |
 
-Contrast on `--paper`: ink 17.9:1, phosphor 11.8:1, phosphor-dim 11:1, graphite 10:1, accent 11.2:1, cyan 10.4:1, magenta 8.3:1 (all text above WCAG AAA); `--rule-strong` 3.3:1, enough for the borders of controls. Notes that need extra colours (Pokémon types, book cloth, sprite skin and hair) define them in their own stylesheet.
+### Day mode
+
+`:root[data-theme="day"]` redefines the same tokens on light paper. Night is the default.
+
+| Token | Day value |
+|---|---|
+| `--paper` | `#f4fbf9` |
+| `--ink` | `#0f2e2a` |
+| `--phosphor` | `#0a7366` |
+| `--phosphor-dim` | `#1d6158` |
+| `--graphite` | `#456662` |
+| `--rule` / `--rule-strong` | `#d3e6e2` / `#6b8d87` |
+| `--accent` / `--accent-hover` | `#9a5800` / `#784400` |
+| `--cyan` | `#0565a0` |
+| `--magenta` | `#ad2c6b` |
+| `--highlight` | `#0a7366` |
+| `--tint` | `#e4f2ef` |
+
+Contrast on day paper: ink 13.9:1, phosphor 5.5:1, phosphor-dim 6.9:1, graphite 6:1, accent 5.3:1, cyan 5.9:1, magenta 6:1; rule-strong 3.5:1. No glow and no scan lines in day mode.
+
+Night contrast on `--paper`: ink 17.9:1, phosphor 11.8:1, phosphor-dim 11:1, graphite 10:1, accent 11.2:1, cyan 10.4:1, magenta 8.3:1 (all text above WCAG AAA); `--rule-strong` 3.3:1, enough for the borders of controls. Notes that need extra colours (Pokémon types, book cloth, sprite skin and hair) define them in their own stylesheet.
 
 CRT effects: titles glow with their own colour (`--glow`), faint scan lines cover the page (`body::after`) and a block cursor blinks after the home headline. Scan lines and glow are switched off for `prefers-contrast: more` and in print; the cursor stops blinking with reduced motion.
 
@@ -80,7 +100,8 @@ Breakpoints: 56rem (home becomes two columns) and 64rem (notes and projects get 
 | Notice | drafts, planned and in-progress projects | Tinted block in the interface font. |
 | Tag | draft label in lists | Outlined, small. |
 | Related links | end of notes and projects | From the `related` front matter. |
-| Language switch | header | A pill with EN and ES; the current language is filled in ink, the other links to this page's translation. |
+| Language switch | header | A pill with ES and EN (the site's default language first); the current language is filled in phosphor, the other links to this page's translation. |
+| Theme switch | header | The same pill with ☾ and ☀ (buttons with `aria-pressed`); hidden without JavaScript. Reveals the new theme in a circle from the switch, paced by screen area rather than radius (an eased radius left a long crawl across the far corner). |
 | Topic icons | home, "What I write about" | 32px inline SVG on a tinted tile (`_includes/topic-icon.html`). Squares are systems (ink), circles are ideas (accent), lines are ink at 2px. On hover, circles grow and squares turn, like the mark. |
 | Prose | Markdown content | Headings, lists, quotes, code, tables, figures with captions, footnotes. |
 

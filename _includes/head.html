@@ -1,8 +1,12 @@
 <meta charset="utf-8">
-<script>document.documentElement.classList.add("js")</script>
+<script>
+  // Before the page paints: JavaScript is on, and the theme the visitor chose (night unless they picked day)
+  document.documentElement.classList.add("js");
+  try { if (localStorage.getItem("rg:theme") === "day") document.documentElement.dataset.theme = "day"; } catch (e) {}
+</script>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="color-scheme" content="dark">
-<meta name="theme-color" content="#050d0c">
+<meta name="theme-color" content="#050d0c" data-night="#050d0c" data-day="#f4fbf9">
 {%- if page.draft or page.noindex %}
 <meta name="robots" content="noindex">
 {%- endif %}

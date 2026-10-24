@@ -17,6 +17,8 @@ en-GB:
     about: /en/about/
     feed: /en/feed.xml
   nav:
+    - title: Home
+      url: /en/
     - title: Lab
       url: /en/lab/
     - title: Notes
@@ -26,6 +28,10 @@ en-GB:
   skip_link: Skip to content
   main_nav: Main
   language: Language
+  theme:
+    label: Theme
+    night: Night mode
+    day: Day mode
   redirect:
     title: This page has moved
     text: "This page is now at"
@@ -87,6 +93,8 @@ es-ES:
     about: /sobre-mi/
     feed: /feed.xml
   nav:
+    - title: Inicio
+      url: /
     - title: Lab
       url: /lab/
     - title: Notas
@@ -96,6 +104,10 @@ es-ES:
   skip_link: Saltar al contenido
   main_nav: Principal
   language: Idioma
+  theme:
+    label: Tema
+    night: Modo noche
+    day: Modo día
   redirect:
     title: Esta página se ha movido
     text: "Esta página está ahora en"

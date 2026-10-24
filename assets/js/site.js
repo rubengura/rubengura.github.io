@@ -4,9 +4,9 @@
    Everything here is optional: the site reads the same without JavaScript.
    Motion is skipped when the visitor's system asks for reduced motion.
    Sections:
-     1. Helpers          4. Signal from noise    6. Achievements
-     2. Scroll reveal    5. Reading progress     7. Konami code
-     3. Old-computer typing
+     1. Helpers          4. Signal from noise    7. Konami code
+     2. Scroll reveal    5. Reading progress     8. Night and day
+     3. Old-computer typing  6. Achievements
    ========================================================================== */
 
 (() => {
@@ -16,7 +16,6 @@
 
   const root = document.documentElement;
   const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
-  const darkScheme = window.matchMedia("(prefers-color-scheme: dark)");
 
   const clamp = (value, min, max) => Math.min(max, Math.max(min, value));
   const easeOut = (t) => 1 - Math.pow(1 - t, 3);
@@ -438,7 +437,7 @@
       drawStill();
       document.fonts?.ready.then(drawStill);
       new ResizeObserver(() => { resize(); drawStill(); }).observe(figure);
-      darkScheme.addEventListener("change", () => { readColours(); drawStill(); });
+      document.addEventListener("rg:themechange", () => { readColours(); drawStill(); });
       return;
     }
 
@@ -449,7 +448,7 @@
     }
 
     new ResizeObserver(resize).observe(figure);
-    darkScheme.addEventListener("change", readColours);
+    document.addEventListener("rg:themechange", readColours);
 
     new IntersectionObserver(([entry]) => {
       onScreen = entry.isIntersecting;
@@ -700,6 +699,80 @@
   }
 
 
+  /* 8. Night and day -------------------------------------------------------
+     Night is the default. The switch in the header sets data-theme="day" on
+     <html> (main.css has the day palette), remembers the choice in this
+     browser, and reveals the new theme in a circle growing from the switch.
+     An inline script in head.html applies a saved choice before the first
+     paint. */
+
+  const THEME_KEY = "rg:theme";
+
+  function nightAndDay() {
+    const buttons = [...document.querySelectorAll("[data-theme-choice]")];
+    if (!buttons.length) return;
+    const meta = document.querySelector('meta[name="theme-color"]');
+    const current = () => (root.dataset.theme === "day" ? "day" : "night");
+
+    function apply(choice) {
+      if (choice === "day") root.dataset.theme = "day";
+      else delete root.dataset.theme;
+      for (const b of buttons) b.setAttribute("aria-pressed", String(b.dataset.themeChoice === choice));
+      if (meta) meta.content = meta.dataset[choice];
+      document.dispatchEvent(new CustomEvent("rg:themechange", { detail: choice }));
+    }
+
+    function choose(choice, button) {
+      if (choice === current()) return;
+      try {
+        localStorage.setItem(THEME_KEY, choice);
+      } catch {
+        /* the choice just won't be remembered */
+      }
+      if (reduceMotion.matches || !document.startViewTransition) {
+        apply(choice);
+        return;
+      }
+      const box = button.getBoundingClientRect();
+      const x = box.left + box.width / 2;
+      const y = box.top + box.height / 2;
+      const frames = revealFrames(x, y);
+      root.classList.add("is-theming");
+      const transition = document.startViewTransition(() => apply(choice));
+      transition.ready.then(() => {
+        root.animate(frames, {
+          duration: 560,
+          easing: "linear",
+          pseudoElement: "::view-transition-new(root)",
+        });
+      });
+      transition.finished.finally(() => root.classList.remove("is-theming"));
+    }
+
+    // The circle's radius at each step, chosen so it uncovers the same share
+    // of the screen per step. Easing the radius instead leaves a long tail:
+    // the circle covers most of the screen quickly and then crawls across the
+    // far corner, which reads as the animation getting stuck.
+    function revealFrames(x, y, steps = 24) {
+      const gap = 24; // a coarse grid of the viewport is plenty
+      const distances = [];
+      for (let px = gap / 2; px < innerWidth; px += gap) {
+        for (let py = gap / 2; py < innerHeight; py += gap) distances.push(Math.hypot(px - x, py - y));
+      }
+      distances.sort((a, b) => a - b);
+      const farthest = Math.hypot(Math.max(x, innerWidth - x), Math.max(y, innerHeight - y));
+      return Array.from({ length: steps + 1 }, (_, k) => {
+        const r = k === 0 ? 0 : k === steps ? farthest : distances[Math.floor((k / steps) * (distances.length - 1))];
+        return { clipPath: `circle(${r.toFixed(1)}px at ${x}px ${y}px)` };
+      });
+    }
+
+    apply(current()); // match the buttons and the browser bar to the theme set in <head>
+    for (const b of buttons) b.addEventListener("click", () => choose(b.dataset.themeChoice, b));
+  }
+
+
+  nightAndDay();
   achievements();
   scrollReveal();
   oldComputerTyping();

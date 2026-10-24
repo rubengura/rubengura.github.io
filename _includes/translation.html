@@ -21,12 +21,19 @@
 <link rel="alternate" hreflang="{{ there.code }}" href="{{ target | absolute_url }}">
 {%- endif %}
 {%- else -%}
+{%- comment %} The site's default language (site.lang) first, then the rest: ES | EN {% endcomment -%}
+{%- assign order = site.lang -%}
+{%- for pair in site.data.i18n -%}
+  {%- if pair[0] != site.lang %}{% assign order = order | append: ',' | append: pair[0] %}{% endif -%}
+{%- endfor -%}
+{%- assign order = order | split: ',' -%}
 <div class="lang-switch" role="group" aria-label="{{ here.language }}">
-  {%- for pair in site.data.i18n %}
-  {%- if pair[0] == page.lang %}
-  <span class="lang-switch__option" aria-current="true" lang="{{ pair[1].code }}" title="{{ pair[1].name }}">{{ pair[1].code | upcase }}</span>
+  {%- for lang in order %}
+  {%- assign l = site.data.i18n[lang] %}
+  {%- if lang == page.lang %}
+  <span class="lang-switch__option" aria-current="true" lang="{{ l.code }}" title="{{ l.name }}">{{ l.code | upcase }}</span>
   {%- else %}
-  <a class="lang-switch__option" href="{{ target | relative_url }}" hreflang="{{ pair[1].code }}" lang="{{ pair[1].code }}" title="{{ pair[1].switch_label }}"><span aria-hidden="true">{{ pair[1].code | upcase }}</span><span class="visually-hidden">{{ pair[1].switch_label }}</span></a>
+  <a class="lang-switch__option" href="{{ target | relative_url }}" hreflang="{{ l.code }}" lang="{{ l.code }}" title="{{ l.switch_label }}"><span aria-hidden="true">{{ l.code | upcase }}</span><span class="visually-hidden">{{ l.switch_label }}</span></a>
   {%- endif %}
   {%- endfor %}
 </div>

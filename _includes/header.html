@@ -10,14 +10,28 @@
         <ul>
           {%- for item in t.nav %}
           {%- assign current = false %}
+          {%- comment %} Home is current only on the home page itself; the others
+               also for the pages inside them {% endcomment %}
           {%- if page.url == item.url %}{% assign current = 'page' %}
-          {%- elsif page.url contains item.url %}{% assign current = 'true' %}
+          {%- elsif item.url != t.urls.home and page.url contains item.url %}{% assign current = 'true' %}
           {%- endif %}
           <li><a href="{{ item.url | relative_url }}"{% if current %} aria-current="{{ current }}"{% endif %}>{{ item.title }}</a></li>
           {%- endfor %}
         </ul>
       </nav>
-      {% include translation.html as="switch" %}
+      <div class="site-header__switches">
+        {% include translation.html as="switch" %}
+        <div class="theme-switch" role="group" aria-label="{{ t.theme.label }}">
+          <button type="button" class="theme-switch__option" data-theme-choice="night" aria-pressed="true" title="{{ t.theme.night }}">
+            <svg viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path fill="currentColor" d="M10.6 1.6a6.6 6.6 0 1 0 3.9 10.5A5.4 5.4 0 0 1 10.6 1.6z"/></svg>
+            <span class="visually-hidden">{{ t.theme.night }}</span>
+          </button>
+          <button type="button" class="theme-switch__option" data-theme-choice="day" aria-pressed="false" title="{{ t.theme.day }}">
+            <svg viewBox="0 0 16 16" aria-hidden="true" focusable="false"><circle cx="8" cy="8" r="3.2" fill="currentColor"/><path stroke="currentColor" stroke-width="1.6" stroke-linecap="round" d="M8 1v1.8M8 13.2V15M1 8h1.8M13.2 8H15M3 3l1.3 1.3M11.7 11.7 13 13M3 13l1.3-1.3M11.7 4.3 13 3"/></svg>
+            <span class="visually-hidden">{{ t.theme.day }}</span>
+          </button>
+        </div>
+      </div>
     </div>
   </div>
 </header>

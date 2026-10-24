@@ -4,11 +4,18 @@ A short log of what was decided and why, so future changes can be made on purpos
 
 ## Decisions
 
-### 2026-10-24 · Spanish first
+### 2026-10-24 · Spanish first, day mode, a Home tab
 
 **Spanish at the root, English under `/en/`.**
 Rubén wanted the site to be in Spanish by default. Moving the Spanish pages to the root (`/`, `/lab/`, `/notas/`, `/sobre-mi/`) and English to `/en/` makes Spanish the default for visitors and search engines alike, rather than redirecting the home page and leaving English as the "real" site. Addresses published before the move redirect to their new place with jekyll-redirect-from (on GitHub Pages' list of plugins); the redirect page is `_layouts/redirect.html`, so it passes the site checks. Two old addresses can't redirect because Spanish pages now live there: `/` and `/lab/`. `/feed.xml` is now the Spanish feed; the English one is `/en/feed.xml`.
 *Ruled out:* redirecting `/` to `/es/` (one line, but English would stay the canonical site); choosing the language from the browser (decided against in the first version).
+
+**Day mode, night by default.**
+A switch in the header (☾ | ☀, the same pill as the language switch) sets `data-theme="day"`. Night stays the default for everyone; the choice is remembered in the visitor's browser and applied by an inline script in `<head>` before the first paint, so there's no flash. The day palette keeps the teal identity on light paper, with every text colour above 4.5:1; glow and scan lines are off in day mode. The change is revealed in a circle growing from the switch (a same-page view transition), or instantly with reduced motion.
+*Ruled out:* following the operating system's setting (Rubén chose night for everyone first).
+
+**A Home tab.**
+"Inicio" / "Home" comes first in the navigation. It's only marked as current on the home page itself, since every address starts with `/`.
 
 ### 2026-10-24 · Teal instead of green
 

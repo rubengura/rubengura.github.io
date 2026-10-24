@@ -90,7 +90,7 @@ Images and diagrams go in `assets/img/lab/project-name/`. SVG works best for arc
 
 ## Two languages
 
-The site is Spanish first: Spanish at the root, English under `/en/`. A switch in the header (EN | ES) takes readers to the same page in the other language, or to that language's home page if there's no translation yet.
+The site is Spanish first: Spanish at the root, English under `/en/`. A switch in the header (ES | EN, the default language first) takes readers to the same page in the other language, or to that language's home page if there's no translation yet.
 
 | Spanish (default) | English |
 |---|---|
@@ -105,6 +105,10 @@ The folder sets the language (`lang: es-ES` or `en-GB`), so you don't need to wr
 - **Topics:** each one has a `name` and `description` per language in `_data/topics.yml`, and an icon in `_includes/topic-icon.html`.
 - **Feeds:** `/feed.xml` (Spanish) and `/en/feed.xml` (English), one per language.
 - **Old addresses:** the site was English-first until 24 October 2026. Pages published before then keep working through `redirect_from` in their front matter (jekyll-redirect-from, page in `_layouts/redirect.html`). If you move a published page, add its old address there.
+
+## Night and day
+
+Night (the terminal look) is the default. The switch in the header (☾ | ☀) changes to day mode and the visitor's browser remembers the choice (`localStorage`, key `rg:theme`). The day palette is the `:root[data-theme="day"]` block in `assets/css/main.css`: every colour a page uses comes from those tokens, so new components get day mode for free as long as they use tokens rather than fixed colours.
 
 ## The display font
 
