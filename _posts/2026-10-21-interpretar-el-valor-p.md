@@ -90,7 +90,7 @@ Así que el investigador también presenta la distribución del IMC en cada grup
 
 <figure class="pv-figure" data-pv="hist">
 {% include notes/p-value/histogram.svg %}
-<figcaption>Histograma de la distribución del IMC para cada grupo de sujetos (en <span class="pv-key pv-key--none">cian</span> los participantes no consumidores de azúcar y en <span class="pv-key pv-key--sugar">magenta</span> los consumidores). Datos simulados con fines ilustrativos.</figcaption>
+<figcaption>Histograma de la distribución del IMC para cada grupo de sujetos (en <span class="pv-key pv-key--none">azul</span> los participantes no consumidores de azúcar y en <span class="pv-key pv-key--sugar">magenta</span> los consumidores). Datos simulados con fines ilustrativos.</figcaption>
 </figure>
 
 Y además, conjuntamente con la distribución, el investigador presenta una prueba estadística: la prueba t. Sin entrar en detalles matemáticos, esta prueba compara las medias de cada grupo teniendo en cuenta también la desviación estándar.

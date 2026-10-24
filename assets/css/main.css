@@ -120,21 +120,23 @@
   --text-col: 38rem;                      /* reading column, about 65–70 characters */
   --col-gap: var(--space-8);
 
-  /* Colour: an old phosphor terminal. Green on near-black, amber for links
-     and ideas (the other classic monitor), cyan and magenta as signals.
-     Contrast on --paper: ink 14:1, graphite 7.4:1, accent 11:1. */
-  --paper: #070b08;       /* near-black with a trace of green */
-  --ink: #8ef0a7;         /* reading text: soft phosphor */
-  --phosphor: #36e06c;    /* titles and the wordmark: bright phosphor, turned down a notch */
-  --graphite: #5fae76;    /* secondary text */
-  --rule: #163522;        /* hairlines and quiet borders */
-  --rule-strong: #2d6b40;
-  --accent: #ffb547;      /* amber: links, focus, ideas, progress */
+  /* Colour: an old terminal with a teal phosphor. Mint and teal on
+     near-black, amber for links and ideas (teal's complement), sky blue and
+     magenta as signals. Contrast on --paper: ink 17.9:1, phosphor 11.8:1,
+     phosphor-dim 11:1, graphite 10:1, accent 11.2:1, rule-strong 3.3:1. */
+  --paper: #050d0c;         /* near-black with a trace of teal */
+  --ink: #c9fff4;           /* reading text and labels: pale mint */
+  --phosphor: #2de0c8;      /* titles, wordmark, robot: bright teal */
+  --phosphor-dim: #7fd1c1;  /* headings inside text, margin labels, navigation */
+  --graphite: #87c4bf;      /* secondary text: descriptions, metadata, captions */
+  --rule: #153330;          /* hairlines and quiet borders */
+  --rule-strong: #2f6e67;   /* borders of controls, chart axes */
+  --accent: #ffb547;        /* amber: links, focus, ideas, progress */
   --accent-hover: #ffd27f;
-  --cyan: #5fd7e8;        /* finished work, notices, strings in code */
-  --magenta: #ff7ac6;     /* drafts, numbers in code */
-  --highlight: #3dff7a;   /* text selection and <mark>, with --paper text */
-  --tint: #0d1710;        /* notices, inline code, code blocks, icon tiles */
+  --cyan: #5cc8ff;          /* sky blue: finished work, notices, strings in code */
+  --magenta: #ff7ac6;       /* drafts, numbers in code */
+  --highlight: #2de0c8;     /* text selection and <mark>, with --paper text */
+  --tint: #0b1817;          /* notices, inline code, code blocks, icon tiles */
 
   /* The glow of a CRT, taken from the text's own colour */
   --glow: 0 0 0.25em color-mix(in srgb, currentColor 28%, transparent);
@@ -144,7 +146,7 @@
   /* Motion: quick out, gentle landing */
   --ease-out: cubic-bezier(0.2, 0.7, 0.2, 1);
   --ease-spring: cubic-bezier(0.3, 1.6, 0.5, 1);
-  --shadow-float: 0 0 24px -8px rgb(61 255 122 / 0.35);
+  --shadow-float: 0 0 24px -8px rgb(45 224 200 / 0.35);
 }
 
 
@@ -516,7 +518,7 @@ abbr[title] {
   display: block;
   padding-block: var(--space-2);
   border-bottom: 2px solid transparent;
-  color: var(--ink);
+  color: var(--phosphor-dim);
   font-family: var(--font-sans);
   font-size: var(--text-sm);
   text-decoration: none;
@@ -573,7 +575,7 @@ a.lang-switch__option:hover {
 }
 
 .site-footer__name {
-  color: var(--ink);
+  color: var(--phosphor-dim);
   font-weight: 700;
 }
 
@@ -707,6 +709,7 @@ html:not(.js) .hero__figure {
 }
 
 .topics__list dt {
+  color: var(--phosphor-dim);
   font-size: var(--text-md);
   font-weight: 500;
   line-height: var(--leading-snug);
@@ -926,7 +929,7 @@ html:not(.js) .hero__figure {
 }
 
 .meta dt {
-  color: var(--ink);
+  color: var(--phosphor-dim);
   font-weight: 700;
 }
 
@@ -985,6 +988,11 @@ html:not(.js) .hero__figure {
 
 .prose > * + * {
   margin-top: 1.1em;
+}
+
+.prose h2,
+.prose h3 {
+  color: var(--phosphor-dim);
 }
 
 .prose h2 {
@@ -1542,6 +1550,7 @@ html:not(.js) .hero__figure {
     --paper: #fff;
     --ink: #000;
     --phosphor: #000;
+    --phosphor-dim: #000;
     --graphite: #333;
     --rule: #ccc;
     --rule-strong: #999;

@@ -15,23 +15,24 @@ On top of that, a layer of play (see *Motion and play* below). It reuses the sam
 
 ## Colour
 
-An old phosphor terminal: green on near-black, with amber (the other classic monitor) as the accent. Cyan and magenta are signals, used sparingly so the page isn't monochrome without becoming noisy. One theme only; print switches to black on white.
+An old terminal with a teal phosphor: pale mint and teal on near-black, with amber (teal's complement) as the accent. Sky blue and magenta are signals, used sparingly so the page isn't monochrome without becoming noisy. One theme only; print switches to black on white.
 
 | Token | Value | Use |
 |---|---|---|
-| `--paper` | `#070b08` | Background, near-black with a trace of green |
-| `--ink` | `#8ef0a7` | Reading text: a softer phosphor, easier over long paragraphs |
-| `--phosphor` | `#36e06c` | Titles, wordmark, the mark's square (systems), current language |
-| `--graphite` | `#5fae76` | Secondary text and metadata |
-| `--rule` | `#163522` | Hairlines between sections |
-| `--rule-strong` | `#2d6b40` | Stronger borders, chart axes |
-| `--accent` | `#ffb547` | Amber: links, focus ring, "ideas" (the mark's circle, the second headline line, scatter circles), progress bar, in-progress status |
-| `--cyan` | `#5fd7e8` | Finished status, notice border, strings in code |
+| `--paper` | `#050d0c` | Background, near-black with a trace of teal |
+| `--ink` | `#c9fff4` | Reading text and labels: pale mint |
+| `--phosphor` | `#2de0c8` | Titles, wordmark, the robot, current language |
+| `--phosphor-dim` | `#7fd1c1` | Headings inside reading text, margin labels (`.meta dt`), navigation, topic names |
+| `--graphite` | `#87c4bf` | Secondary text: descriptions, metadata, captions |
+| `--rule` | `#153330` | Hairlines between sections |
+| `--rule-strong` | `#2f6e67` | Borders of controls, chart axes |
+| `--accent` | `#ffb547` | Amber: links, focus ring, "ideas" (the second headline line, scatter circles, the robot's bulb), progress bar, in-progress status |
+| `--cyan` | `#5cc8ff` | Sky blue (kept bluer than the teals so it stays distinct): finished status, notice border, strings in code |
 | `--magenta` | `#ff7ac6` | Draft tag, numbers in code |
-| `--highlight` | `#3dff7a` | Text selection and `<mark>`, with `--paper` text |
-| `--tint` | `#0d1710` | Notices, code, icon tiles |
+| `--highlight` | `#2de0c8` | Text selection and `<mark>`, with `--paper` text |
+| `--tint` | `#0b1817` | Notices, code, icon tiles, panels |
 
-Contrast on `--paper`: ink 14:1, graphite 7.4:1, accent 11:1, cyan 11.7:1, magenta 8.4:1 (all above WCAG AA, most above AAA).
+Contrast on `--paper`: ink 17.9:1, phosphor 11.8:1, phosphor-dim 11:1, graphite 10:1, accent 11.2:1, cyan 10.4:1, magenta 8.3:1 (all text above WCAG AAA); `--rule-strong` 3.3:1, enough for the borders of controls. Notes that need extra colours (Pokémon types, book cloth, sprite skin and hair) define them in their own stylesheet.
 
 CRT effects: titles glow with their own colour (`--glow`), faint scan lines cover the page (`body::after`) and a block cursor blinks after the home headline. Scan lines and glow are switched off for `prefers-contrast: more` and in print; the cursor stops blinking with reduced motion.
 

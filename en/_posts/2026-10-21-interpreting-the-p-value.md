@@ -90,7 +90,7 @@ So the researcher also presents the distribution of BMI in each group. The histo
 
 <figure class="pv-figure" data-pv="hist">
 {% include notes/p-value/histogram.svg %}
-<figcaption>Histogram of BMI in each group (people who don't eat sugar in <span class="pv-key pv-key--none">cyan</span>, people who do in <span class="pv-key pv-key--sugar">magenta</span>). Simulated data, for illustration.</figcaption>
+<figcaption>Histogram of BMI in each group (people who don't eat sugar in <span class="pv-key pv-key--none">blue</span>, people who do in <span class="pv-key pv-key--sugar">magenta</span>). Simulated data, for illustration.</figcaption>
 </figure>
 
 Along with the distribution, the researcher presents a statistical test: the t-test. Without going into the maths, it compares the means of the two groups, taking their standard deviations into account.

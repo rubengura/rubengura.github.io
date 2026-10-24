@@ -10,6 +10,10 @@ A short log of what was decided and why, so future changes can be made on purpos
 Rubén wanted the site to be in Spanish by default. Moving the Spanish pages to the root (`/`, `/lab/`, `/notas/`, `/sobre-mi/`) and English to `/en/` makes Spanish the default for visitors and search engines alike, rather than redirecting the home page and leaving English as the "real" site. Addresses published before the move redirect to their new place with jekyll-redirect-from (on GitHub Pages' list of plugins); the redirect page is `_layouts/redirect.html`, so it passes the site checks. Two old addresses can't redirect because Spanish pages now live there: `/` and `/lab/`. `/feed.xml` is now the Spanish feed; the English one is `/en/feed.xml`.
 *Ruled out:* redirecting `/` to `/es/` (one line, but English would stay the canonical site); choosing the language from the browser (decided against in the first version).
 
+### 2026-10-24 · Teal instead of green
+
+**The phosphor turns teal.** Text colours now come from a teal palette chosen by Rubén: `#c9fff4` (reading text), `#2de0c8` (titles), `#7fd1c1` (a new `--phosphor-dim` for headings inside text, margin labels and navigation) and `#87c4bf` (secondary text). Background, panels and rules took a teal tint to match, and the stronger rule was lightened to keep 3:1 for control borders. `--cyan` moved towards blue (`#5cc8ff`), because the old cyan was almost the new teal; captions that named it now say blue. Amber and magenta stay. The favicon moved to teal and amber too.
+
 ### 2026-10-21 · Interactive notes
 
 **Notes can load their own CSS and JavaScript.**
