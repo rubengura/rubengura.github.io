@@ -1,4 +1,5 @@
 ---
+redirect_from: /notes/the-dashboard-isnt-broken/
 ref: dashboard-definition
 title: "The dashboard isn’t broken. The definition is."
 description: Why a metric can be wrong even when every pipeline test passes, and why the fix is usually a conversation rather than a patch.
@@ -8,7 +9,7 @@ notice: This note was written to try out the layout of the site, and it hasn’t
 sitemap: false
 related:
   - title: "Planned project: When the pipeline is green and the number is wrong"
-    url: /lab/data-quality-case-study/
+    url: /en/lab/data-quality-case-study/
 ---
 
 Imagine two dashboards that disagree. One says the product had 48,000 active users last month. The other says 61,000. Both pipelines ran on time, and every test passed: no unexpected nulls, unique keys, fresh data.

@@ -12,10 +12,10 @@ The site is built with [Jekyll](https://jekyllrb.com/), which GitHub Pages runs 
 _config.yml        Site settings: name, links, navigation, URLs, plugins
 _data/i18n.yml     Interface text in English and Spanish: navigation, labels, headline
 _data/topics.yml   The topics used to label notes, in both languages
-_posts/            Notes (one Markdown file per note)
-_projects/         Engineering Lab projects (one Markdown file per project)
-_projects/es/      Spanish translations of projects
-es/                Spanish pages: home, Lab, Notas, Sobre mí, feed, and es/_posts/ for notes
+_posts/            Notes in Spanish, the default language (one Markdown file per note)
+_projects/         Engineering Lab projects in Spanish (one Markdown file per project)
+_projects/en/      English translations of projects
+en/                English pages: home, Lab, Notes, About, feed, and en/_posts/ for notes
 _templates/        Copy-paste starting points for a new note or project (not published)
 _layouts/          Page templates: default, page, note, project
 _includes/         Reusable pieces: header, footer, lists, status marker…
@@ -23,10 +23,10 @@ assets/css/        main.css, the whole design system in one file
 assets/js/         site.js: scatter plot, scroll reveal, reading progress, achievements
 assets/fonts/      Self-hosted fonts and their licences (rubengura-led.woff2 is generated, see below)
 assets/img/        Icons, social preview image, images for notes and projects
-index.html         Home
-about.md           About
-lab/index.html     Engineering Lab listing
-notes/index.html   Notes & Ideas listing
+index.html         Home (Spanish)
+sobre-mi.md        About (Spanish)
+lab/index.html     Engineering Lab listing (Spanish)
+notas/index.html   Notes listing (Spanish)
 404.html           "Page not found"
 docs/              Design system and decision log (not published)
 scripts/           Checks to run before publishing (not published)
@@ -50,12 +50,12 @@ The `Gemfile` uses the `github-pages` gem, so you get the same Jekyll version an
 
 ## Publish a note
 
-1. Copy `_templates/note.md` to `_posts/YYYY-MM-DD-short-title.md`. The date in the file name is the publication date; the rest becomes the URL: `/notes/short-title/`.
+1. Copy `_templates/note.md` to `_posts/YYYY-MM-DD-titulo-corto.md`. The date in the file name is the publication date; the rest becomes the URL: `/notas/titulo-corto/`. For the English version, see "Two languages" below.
 2. Fill in the front matter: `title`, `description` (one or two sentences, also used by search engines and the RSS feed) and `topics` (ids from `_data/topics.yml`).
 3. Write the note in Markdown below the front matter.
 4. Preview it locally, run the checks (below), commit and push.
 
-The note appears automatically on the home page, in `/notes/`, in the RSS feed and in the sitemap.
+The note appears automatically on the home page, in `/notas/`, in the RSS feed and in the sitemap.
 
 **Not ready yet?** Two options:
 
@@ -86,20 +86,21 @@ Images and diagrams go in `assets/img/lab/project-name/`. SVG works best for arc
 
 ## Two languages
 
-The site is in English (at the root) and Spanish (under `/es/`). A switch in the header (EN | ES) takes readers to the same page in the other language, or to that language's home page if there's no translation yet.
+The site is Spanish first: Spanish at the root, English under `/en/`. A switch in the header (EN | ES) takes readers to the same page in the other language, or to that language's home page if there's no translation yet.
 
-| English | Spanish |
+| Spanish (default) | English |
 |---|---|
-| `_posts/2026-10-20-short-title.md` → `/notes/short-title/` | `es/_posts/2026-10-20-titulo-corto.md` → `/es/notas/titulo-corto/` |
-| `_projects/project-name.md` → `/lab/project-name/` | `_projects/es/nombre-proyecto.md` → `/es/lab/nombre-proyecto/` |
-| `about.md` → `/about/` | `es/sobre-mi.md` → `/es/sobre-mi/` |
+| `_posts/2026-10-20-titulo-corto.md` → `/notas/titulo-corto/` | `en/_posts/2026-10-20-short-title.md` → `/en/notes/short-title/` |
+| `_projects/nombre-proyecto.md` → `/lab/nombre-proyecto/` | `_projects/en/project-name.md` → `/en/lab/project-name/` |
+| `sobre-mi.md` → `/sobre-mi/` | `en/about.md` → `/en/about/` |
 
-The folder sets the language (`lang: en-GB` or `es-ES`), so you don't need to write it. What links a page to its translation is `ref`: give both files the same value, for example `ref: dashboard-definition`. Without a match, the switch goes to the other home page; nothing breaks.
+The folder sets the language (`lang: es-ES` or `en-GB`), so you don't need to write it. What links a page to its translation is `ref`: give both files the same value, for example `ref: dashboard-definition`. Without a match, the switch goes to the other home page; nothing breaks.
 
-- **Translating a note:** copy the file into `es/_posts/`, keep the date and `ref`, translate the text and use Spanish links in `related` (`/es/...`).
+- **Translating a note:** copy the file into `en/_posts/`, keep the date and `ref`, translate the text and use English links in `related` (`/en/...`).
 - **Interface text** (navigation, labels, dates, notices, the home headline): `_data/i18n.yml`. Any new label goes in both languages.
 - **Topics:** each one has a `name` and `description` per language in `_data/topics.yml`, and an icon in `_includes/topic-icon.html`.
-- **Feeds:** `/feed.xml` (English) and `/es/feed.xml` (Spanish), one per language.
+- **Feeds:** `/feed.xml` (Spanish) and `/en/feed.xml` (English), one per language.
+- **Old addresses:** the site was English-first until 24 October 2026. Pages published before then keep working through `redirect_from` in their front matter (jekyll-redirect-from, page in `_layouts/redirect.html`). If you move a published page, add its old address there.
 
 ## The display font
 
@@ -120,7 +121,7 @@ python3 scripts/build_font.py    # writes assets/fonts/rubengura-led.woff2
 | Topics for notes, and their icons | `_data/topics.yml`, `_includes/topic-icon.html` |
 | Colours, fonts, spacing | the tokens at the top of `assets/css/main.css` |
 | Shapes of the display font | `scripts/fonts/rubengura-led.json`, then `scripts/build_font.py` |
-| The About page | `about.md` and `es/sobre-mi.md` |
+| The About page | `sobre-mi.md` and `en/about.md` |
 
 ## Check before publishing
 

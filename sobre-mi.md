@@ -1,9 +1,10 @@
 ---
+redirect_from: /es/sobre-mi/
 ref: about
 title: Sobre mí
 description: Rubén Guerrero es ingeniero de datos y estudió psicología. Cómo llegó hasta aquí, cómo entiende la ingeniería y para qué sirve esta web.
 lede: Soy Rubén Guerrero. Trabajo como ingeniero de datos y llevo trabajando con datos desde 2017.
-permalink: /es/sobre-mi/
+permalink: /sobre-mi/
 ---
 
 ## De la psicología a los datos
@@ -39,4 +40,4 @@ Es un lugar para documentar bien los proyectos, para publicar lo que aprendo mie
 {% for link in site.social.links -%}
 - {% include profile-link.html url=link %}
 {% endfor -%}
-- [Feed de notas (RSS)]({{ '/es/feed.xml' | relative_url }})
+- [Feed de notas (RSS)]({{ '/feed.xml' | relative_url }})

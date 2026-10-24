@@ -1,4 +1,5 @@
 ---
+redirect_from: /es/notas/interpretar-el-valor-p/
 ref: p-value
 title: "Interpretar el valor p (p-value) correctamente"
 description: Qué significa de verdad el valor p, contado como un juicio en el que el azúcar es el acusado y el valor p hace de juez.

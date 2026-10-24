@@ -1,4 +1,5 @@
 ---
+redirect_from: /es/notas/el-dashboard-no-esta-roto/
 ref: dashboard-definition
 title: "El dashboard no está roto. La definición, sí."
 description: Por qué una métrica puede estar mal aunque pasen todos los tests del pipeline, y por qué el arreglo suele ser una conversación más que un parche.
@@ -8,7 +9,7 @@ notice: Esta nota se escribió para probar el diseño de la web y todavía no es
 sitemap: false
 related:
   - title: "Proyecto planificado: Cuando el pipeline está en verde y el número está mal"
-    url: /es/lab/caso-calidad-de-datos/
+    url: /lab/caso-calidad-de-datos/
 ---
 
 Imagina dos dashboards que no coinciden. Uno dice que el producto tuvo 48.000 usuarios activos el mes pasado. El otro dice 61.000. Los dos pipelines se ejecutaron a tiempo y todos los tests pasaron: ningún nulo inesperado, claves únicas, datos frescos.

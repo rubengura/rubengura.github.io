@@ -4,6 +4,12 @@ A short log of what was decided and why, so future changes can be made on purpos
 
 ## Decisions
 
+### 2026-10-24 · Spanish first
+
+**Spanish at the root, English under `/en/`.**
+Rubén wanted the site to be in Spanish by default. Moving the Spanish pages to the root (`/`, `/lab/`, `/notas/`, `/sobre-mi/`) and English to `/en/` makes Spanish the default for visitors and search engines alike, rather than redirecting the home page and leaving English as the "real" site. Addresses published before the move redirect to their new place with jekyll-redirect-from (on GitHub Pages' list of plugins); the redirect page is `_layouts/redirect.html`, so it passes the site checks. Two old addresses can't redirect because Spanish pages now live there: `/` and `/lab/`. `/feed.xml` is now the Spanish feed; the English one is `/en/feed.xml`.
+*Ruled out:* redirecting `/` to `/es/` (one line, but English would stay the canonical site); choosing the language from the browser (decided against in the first version).
+
 ### 2026-10-21 · Interactive notes
 
 **Notes can load their own CSS and JavaScript.**

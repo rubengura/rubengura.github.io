@@ -1,4 +1,5 @@
 ---
+redirect_from: /es/lab/plataforma-analitica/
 ref: analytics-platform
 title: Una pequeña plataforma analítica, de principio a fin
 description: Ingerir un dataset público, modelarlo en un data warehouse, probarlo, orquestarlo y servirlo, manteniendo el conjunto lo bastante pequeño como para poder razonar sobre él.

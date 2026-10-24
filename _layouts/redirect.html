@@ -1,0 +1,22 @@
+<!doctype html>
+{%- comment -%}
+  Used by jekyll-redirect-from for addresses that moved when the site became
+  Spanish-first (front matter: redirect_from). Redirects at once; the text
+  is for anyone whose browser doesn't.
+{%- endcomment -%}
+{%- assign t = site.data.i18n[page.lang] | default: site.data.i18n[site.lang] -%}
+<html lang="{{ page.lang | default: site.lang }}">
+<head>
+<meta charset="utf-8">
+<title>{{ t.redirect.title }} · {{ site.title }}</title>
+<meta name="description" content="{{ t.redirect.text }} {{ page.redirect.to }}">
+<meta name="robots" content="noindex">
+<link rel="canonical" href="{{ page.redirect.to }}">
+<meta http-equiv="refresh" content="0; url={{ page.redirect.to }}">
+<script>location.replace({{ page.redirect.to | jsonify }})</script>
+</head>
+<body>
+<h1>{{ t.redirect.title }}</h1>
+<p>{{ t.redirect.text }} <a href="{{ page.redirect.to }}">{{ page.redirect.to }}</a>.</p>
+</body>
+</html>

@@ -8,11 +8,11 @@
 # Identity --------------------------------------------------------------------
 title: Rubén Guerrero          # site name: browser tab, search results, link previews
 handle: rubengura              # wordmark in the header
-tagline: Data engineer         # home page <title>: "Rubén Guerrero | Data engineer"
+tagline: Ingeniero de datos    # home page <title>: "Rubén Guerrero | Ingeniero de datos"
 description: >-
-  Rubén Guerrero is a data engineer with a background in psychology. Engineering
-  projects written up with their trade-offs, and notes on data, psychology,
-  AI and possible futures.
+  Rubén Guerrero es ingeniero de datos y estudió psicología. Proyectos de
+  ingeniería contados con sus decisiones, y notas sobre datos, psicología,
+  IA y futuros posibles.
 # The home page headline and all other interface text, in both languages,
 # are in _data/i18n.yml.
 
@@ -33,17 +33,18 @@ repository_url: https://github.com/rubengura/rubengura.github.io
 # URLs ------------------------------------------------------------------------
 url: https://rubengura.github.io
 baseurl: ""
-lang: en-GB                    # default language; Spanish pages live under /es/
+lang: es-ES                    # default language; English pages live under /en/
 timezone: Europe/Madrid
 # Navigation is in _data/i18n.yml, one list per language.
 
 # Content ---------------------------------------------------------------------
-# Notes live in _posts/ and are published at /notes/<file-name-without-date>/
-# Spanish notes live in es/_posts/ and are published at /es/notas/<...>/
-permalink: /notes/:title/
+# The site is Spanish first. Notes live in _posts/ and are published at
+# /notas/<file-name-without-date>/; English notes live in en/_posts/ and are
+# published at /en/notes/<...>/
+permalink: /notas/:title/
 
 # Engineering Lab projects live in _projects/ and are published at /lab/<file-name>/
-# Spanish projects live in _projects/es/ and are published at /es/lab/<file-name>/
+# English projects live in _projects/en/ and are published at /en/lab/<file-name>/
 collections:
   projects:
     output: true
@@ -59,7 +60,7 @@ defaults:
     values:
       layout: page
       image: /assets/img/og-default.png
-      lang: en-GB
+      lang: es-ES
   - scope:
       path: ""
       type: posts
@@ -71,20 +72,20 @@ defaults:
     values:
       layout: project
   - scope:
-      path: "es"
+      path: "en"
     values:
-      lang: es-ES
+      lang: en-GB
   - scope:
-      path: "es"
+      path: "en"
       type: posts
     values:
-      permalink: /es/notas/:title/
+      permalink: /en/notes/:title/
   - scope:
-      path: "_projects/es"
+      path: "_projects/en"
       type: projects
     values:
-      lang: es-ES
-      permalink: /es/lab/:name/
+      lang: en-GB
+      permalink: /en/lab/:name/
 
 # Build -----------------------------------------------------------------------
 markdown: kramdown
@@ -96,11 +97,14 @@ kramdown:
 highlighter: rouge
 
 # Only plugins supported by GitHub Pages (https://pages.github.com/versions/).
-# The feeds are plain templates (feed.xml, es/feed.xml) rather than jekyll-feed,
-# which can't keep one feed per language.
+# The feeds are plain templates (feed.xml, en/feed.xml) rather than jekyll-feed,
+# which can't keep one feed per language. jekyll-redirect-from keeps the
+# addresses from before the move to Spanish-first working (redirect_from in
+# front matter; the page is _layouts/redirect.html).
 plugins:
   - jekyll-seo-tag
   - jekyll-sitemap
+  - jekyll-redirect-from
 
 # Files that are part of the repository but not of the website.
 exclude:

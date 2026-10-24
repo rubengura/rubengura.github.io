@@ -1,4 +1,5 @@
 ---
+redirect_from: /notes/interpreting-the-p-value/
 ref: p-value
 title: "Interpreting the p-value correctly"
 description: What the p-value really means, told as a trial in which sugar is the defendant and the p-value is the judge.

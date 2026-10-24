@@ -546,9 +546,9 @@
 
   // Sections count for Explorer in either language.
   const SECTIONS = {
-    lab: ["/lab/", "/es/lab/"],
-    notes: ["/notes/", "/es/notas/"],
-    about: ["/about/", "/es/sobre-mi/"],
+    lab: ["/lab/", "/en/lab/"],
+    notes: ["/notas/", "/en/notes/"],
+    about: ["/sobre-mi/", "/en/about/"],
   };
   const UNLOCKED_KEY = "rg:achievements";
   const VISITED_KEY = "rg:visited";

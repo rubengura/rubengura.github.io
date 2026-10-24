@@ -1,4 +1,5 @@
 ---
+redirect_from: /lab/data-quality-case-study/
 ref: data-quality-case-study
 title: When the pipeline is green and the number is wrong
 description: A data quality case study built around a business question. The tests pass, the metric misleads, and the project is about what it takes to catch the difference.
@@ -11,7 +12,7 @@ repo:                    # https://github.com/rubengura/...
 demo:
 related:
   - title: "Note: The dashboard isn’t broken. The definition is."
-    url: /notes/the-dashboard-isnt-broken/
+    url: /en/notes/the-dashboard-isnt-broken/
 ---
 
 ## Problem

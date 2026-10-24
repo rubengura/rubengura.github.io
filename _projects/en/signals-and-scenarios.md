@@ -1,4 +1,5 @@
 ---
+redirect_from: /lab/signals-and-scenarios/
 ref: signals-and-scenarios
 title: Signals and scenarios
 description: An experiment in using public data for futures thinking. The plan is to track signals of change and connect them to explicit scenarios that can be revised as the data moves.

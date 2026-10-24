@@ -1,7 +1,7 @@
 ---
-# Copy this file to _posts/YYYY-MM-DD-short-title.md
-# The URL will be /notes/short-title/ (taken from the file name, without the date).
-# Spanish version: es/_posts/YYYY-MM-DD-titulo-corto.md → /es/notas/titulo-corto/
+# Copy this file to _posts/YYYY-MM-DD-titulo-corto.md (Spanish, the default)
+# The URL will be /notas/titulo-corto/ (taken from the file name, without the date).
+# English version: en/_posts/YYYY-MM-DD-short-title.md → /en/notes/short-title/
 
 title: "Title in sentence case"
 ref: short-title                # same value in the translation; links the two versions

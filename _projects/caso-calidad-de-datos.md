@@ -1,4 +1,5 @@
 ---
+redirect_from: /es/lab/caso-calidad-de-datos/
 ref: data-quality-case-study
 title: Cuando el pipeline está en verde y el número está mal
 description: Un caso práctico de calidad de datos construido en torno a una pregunta de negocio. Los tests pasan, la métrica engaña, y el proyecto trata de lo que hace falta para detectar la diferencia.
@@ -11,7 +12,7 @@ repo:                    # https://github.com/rubengura/...
 demo:
 related:
   - title: "Nota: El dashboard no está roto. La definición, sí."
-    url: /es/notas/el-dashboard-no-esta-roto/
+    url: /notas/el-dashboard-no-esta-roto/
 ---
 
 ## Problema

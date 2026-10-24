@@ -1,6 +1,6 @@
 # Interface text in each language. The keys match the `lang` of each page
-# (en-GB by default, es-ES for everything under /es/ and _projects/es/).
-# Page content itself lives in the pages: English at the root, Spanish under /es/.
+# (es-ES by default, en-GB for everything under /en/ and _projects/en/).
+# Page content itself lives in the pages: Spanish at the root, English under /en/.
 
 en-GB:
   code: en
@@ -11,21 +11,25 @@ en-GB:
     systems: Building reliable systems.
     ideas: Exploring complex ideas.
   urls:
-    home: /
-    lab: /lab/
-    notes: /notes/
-    about: /about/
-    feed: /feed.xml
+    home: /en/
+    lab: /en/lab/
+    notes: /en/notes/
+    about: /en/about/
+    feed: /en/feed.xml
   nav:
     - title: Lab
-      url: /lab/
+      url: /en/lab/
     - title: Notes
-      url: /notes/
+      url: /en/notes/
     - title: About
-      url: /about/
+      url: /en/about/
   skip_link: Skip to content
   main_nav: Main
   language: Language
+  redirect:
+    title: This page has moved
+    text: "This page is now at"
+
   home:
     lab_title: Engineering Lab
     lab_lede: Small projects, documented with the decisions behind them.
@@ -77,21 +81,25 @@ es-ES:
     systems: Construyo sistemas fiables.
     ideas: Exploro ideas complejas.
   urls:
-    home: /es/
-    lab: /es/lab/
-    notes: /es/notas/
-    about: /es/sobre-mi/
-    feed: /es/feed.xml
+    home: /
+    lab: /lab/
+    notes: /notas/
+    about: /sobre-mi/
+    feed: /feed.xml
   nav:
     - title: Lab
-      url: /es/lab/
+      url: /lab/
     - title: Notas
-      url: /es/notas/
+      url: /notas/
     - title: Sobre mí
-      url: /es/sobre-mi/
+      url: /sobre-mi/
   skip_link: Saltar al contenido
   main_nav: Principal
   language: Idioma
+  redirect:
+    title: Esta página se ha movido
+    text: "Esta página está ahora en"
+
   home:
     lab_title: Engineering Lab
     lab_lede: Proyectos pequeños, documentados con las decisiones que hay detrás.

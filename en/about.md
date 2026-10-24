@@ -1,9 +1,10 @@
 ---
+redirect_from: /about/
 ref: about
 title: About
 description: Rubén Guerrero is a data engineer who studied psychology. How he got here, how he thinks about engineering, and what this site is for.
 lede: I’m Rubén Guerrero. I work as a data engineer, and I’ve been working with data since 2017.
-permalink: /about/
+permalink: /en/about/
 ---
 
 ## From psychology to data
@@ -39,4 +40,4 @@ It’s a place to document projects properly, to publish what I learn while I’
 {% for link in site.social.links -%}
 - {% include profile-link.html url=link %}
 {% endfor -%}
-- [Notes feed (RSS)]({{ '/feed.xml' | relative_url }})
+- [Notes feed (RSS)]({{ '/en/feed.xml' | relative_url }})

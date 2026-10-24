@@ -1,4 +1,5 @@
 ---
+redirect_from: /es/lab/senales-y-escenarios/
 ref: signals-and-scenarios
 title: Señales y escenarios
 description: Un experimento para usar datos públicos en el pensamiento de futuros. La idea es seguir señales de cambio y conectarlas con escenarios explícitos que se puedan revisar a medida que se mueven los datos.

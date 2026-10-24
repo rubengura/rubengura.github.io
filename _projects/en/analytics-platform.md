@@ -1,4 +1,5 @@
 ---
+redirect_from: /lab/analytics-platform/
 ref: analytics-platform
 title: A small analytics platform, end to end
 description: Ingest a public dataset, model it in a warehouse, test it, orchestrate it and serve it, while keeping the whole thing small enough to reason about.

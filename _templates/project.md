@@ -1,7 +1,7 @@
 ---
-# Copy this file to _projects/project-name.md
-# The URL will be /lab/project-name/ (taken from the file name).
-# Spanish version: _projects/es/nombre-proyecto.md → /es/lab/nombre-proyecto/
+# Copy this file to _projects/nombre-proyecto.md (Spanish, the default)
+# The URL will be /lab/nombre-proyecto/ (taken from the file name).
+# English version: _projects/en/project-name.md → /en/lab/project-name/
 
 title: Project name
 ref: project-name         # same value in the translation; links the two versions
