@@ -1,0 +1,40 @@
+{%- comment -%}
+  A step-by-step "dbt compile" of the Jinja loop: each iteration lights the
+  loop's line and writes the SQL it produces. Readers can add their own
+  types to the list. Driven by assets/js/notes/dbt-pivot.js; hidden without
+  JavaScript (the code itself is in the article).
+{%- endcomment -%}
+{%- assign es = false %}{% if page.lang == 'es-ES' %}{% assign es = true %}{% endif -%}
+<figure class="pt-window dp-compiler pt-needs-js" data-dp="compiler">
+  <div class="pt-window__bar" aria-hidden="true"><span></span><span></span><span></span><span class="pt-window__title">dbt compile</span></div>
+  <div class="dp-vars">
+    <p class="dp-vars__name"><code>pokemon_types</code> =</p>
+    <ul class="dp-vars__list" aria-label="pokemon_types"></ul>
+    <form class="dp-vars__add">
+      <label for="dp-new-type" class="visually-hidden">{% if es %}Nuevo tipo{% else %}New type{% endif %}</label>
+      <input id="dp-new-type" type="text" maxlength="12" autocomplete="off" spellcheck="false" placeholder="{% if es %}Nuevo tipo, p. ej. Sound{% else %}New type, e.g. Sound{% endif %}">
+      <button type="submit" class="pt-button dp-button">+ {% if es %}Añadir{% else %}Add{% endif %}</button>
+      <button type="button" class="dp-button dp-button--ghost" data-action="reset">{% if es %}Restaurar{% else %}Reset{% endif %}</button>
+    </form>
+  </div>
+  <p class="dp-pane__title">models/pokemon_pivot.sql</p>
+  <pre class="dp-pane dp-src"><code><span class="dp-line">SELECT</span>
+<span class="dp-line">    "Type1"</span>
+<span class="dp-line dp-c">{% if es %}    -- Por cada tipo de Pokémon, creamos un SUM(CASE WHEN ...) que seleccione{% else %}    -- For each type of Pokémon, we create a SUM(CASE WHEN ...) that picks{% endif %}</span>
+<span class="dp-line dp-c">{% if es %}    -- el tipo de Pokémon sobre el que estamos iterando.{% else %}    -- the type of Pokémon we're iterating over.{% endif %}</span>
+<span class="dp-line dp-j">{% raw %}    {%- for type in pokemon_types %}{% endraw %}</span>
+<span class="dp-line dp-body">    , SUM(CASE WHEN "Type2" = '<span class="dp-ph dp-ph--str">{% raw %}{{ type }}{% endraw %}</span>' THEN 1 ELSE 0 END) AS <span class="dp-ph dp-ph--name">{% raw %}{{ type }}{% endraw %}</span><span class="dp-badge-type" aria-hidden="true"></span></span>
+<span class="dp-line dp-j">{% raw %}    {%- endfor %}{% endraw %}</span>
+<span class="dp-line">    , SUM(CASE WHEN "Type2" IS NULL THEN 1 ELSE 0 END) AS blank</span>
+<span class="dp-line">FROM dwh_dbt.pokemon_stats</span>
+<span class="dp-line">GROUP BY 1</span>
+<span class="dp-line">ORDER BY 1</span></code></pre>
+  <p class="dp-pane__title">target/compiled/…/pokemon_pivot.sql</p>
+  <pre class="dp-pane dp-out" aria-hidden="true"><code></code></pre>
+  <p class="dp-status" data-out="status" aria-live="polite"></p>
+  <div class="dp-actions">
+    <button type="button" class="pt-button dp-button dp-button--primary" data-action="play">▶ {% if es %}Compilar{% else %}Compile{% endif %}</button>
+    <button type="button" class="pt-button dp-button" data-action="step">⏭ {% if es %}Siguiente iteración{% else %}Next iteration{% endif %}</button>
+  </div>
+  <figcaption>{% if es %}Cada iteración escribe una línea: el valor de <code>type</code> entra entre comillas como texto (<span class="dp-key dp-key--str">azul</span>) y sin comillas como nombre de columna (<span class="dp-key dp-key--name">magenta</span>). Añade un tipo a la lista y vuelve a compilar: aparece su columna sin tocar el resto del código.{% else %}Each iteration writes one line: the value of <code>type</code> goes in quoted, as text (<span class="dp-key dp-key--str">blue</span>), and unquoted, as a column name (<span class="dp-key dp-key--name">magenta</span>). Add a type to the list and compile again: its column appears without touching the rest of the code.{% endif %}</figcaption>
+</figure>

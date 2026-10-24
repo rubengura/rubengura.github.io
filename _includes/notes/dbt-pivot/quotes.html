@@ -1,0 +1,19 @@
+{%- comment -%}
+  Quotes or no quotes: the same {{ type }} becomes a string or a column name.
+  The value cycles through the types (assets/js/notes/dbt-pivot.js).
+{%- endcomment -%}
+{%- assign es = false %}{% if page.lang == 'es-ES' %}{% assign es = true %}{% endif -%}
+<div class="dp-quotes" data-dp="quotes">
+  <div class="dp-quote dp-quote--str">
+    <code class="dp-quote__in">'{% raw %}{{ type }}{% endraw %}'</code>
+    <span class="dp-quote__arrow" aria-hidden="true">→</span>
+    <code class="dp-quote__out">'<span class="dp-quote__val">Bug</span>'</code>
+    <span class="dp-quote__label">{% if es %}con comillas: un texto (string){% else %}quoted: a string{% endif %}</span>
+  </div>
+  <div class="dp-quote dp-quote--name">
+    <code class="dp-quote__in">{% raw %}{{ type }}{% endraw %}</code>
+    <span class="dp-quote__arrow" aria-hidden="true">→</span>
+    <code class="dp-quote__out"><span class="dp-quote__val">Bug</span></code>
+    <span class="dp-quote__label">{% if es %}sin comillas: un nombre de columna{% else %}unquoted: a column name{% endif %}</span>
+  </div>
+</div>

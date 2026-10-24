@@ -1,0 +1,21 @@
+{%- comment -%}
+  The pivot machine: pick a first type and watch GROUP BY gather its rows and
+  SUM(CASE …) count them into one column per second type. Driven by
+  assets/js/notes/pivot.js; hidden without JavaScript.
+{%- endcomment -%}
+{%- assign es = false %}{% if page.lang == 'es-ES' %}{% assign es = true %}{% endif -%}
+<figure class="pt-window pt-machine pt-needs-js" data-pt="machine">
+  <div class="pt-window__bar" aria-hidden="true"><span></span><span></span><span></span><span class="pt-window__title">pivot.exe</span></div>
+  <p class="pt-machine__intro">{% if es %}Elige un tipo 1. <code>GROUP BY</code> reúne sus filas y cada <code>SUM(CASE …)</code> cuenta las que caen en su columna de tipo 2.{% else %}Pick a first type. <code>GROUP BY</code> gathers its rows, and each <code>SUM(CASE …)</code> counts the ones that land in its second-type column.{% endif %}</p>
+  <div class="pt-machine__types" role="group" aria-label="{% if es %}Tipo 1{% else %}First type{% endif %}">
+    {%- for t in site.data.pokemon_pivot.types %}
+    <button type="button" class="pt-badge pt-machine__type" style="--type: var(--t-{{ t | downcase }})" data-type="{{ t }}" aria-pressed="false">{{ t }}</button>
+    {%- endfor %}
+  </div>
+  <div class="pt-machine__rows" aria-hidden="true"></div>
+  <div class="pt-machine__buckets" aria-hidden="true"></div>
+  <p class="pt-machine__status"><code>WHERE "Type1" = '<span data-out="type">Grass</span>'</code> → <strong data-out="n">0</strong> {% if es %}filas{% else %}rows{% endif %}</p>
+  <p class="visually-hidden" data-out="summary" aria-live="polite"></p>
+  <script type="application/json" class="pt-data">{{ site.data.pokemon_types | jsonify }}</script>
+  <figcaption>{% if es %}Cada ficha es una fila de la tabla; la columna «—» es la de los Pokémon sin segundo tipo (<code>blank</code>). La fila resultante es la misma que la de ese tipo en la tabla final.{% else %}Each chip is a row of the table; the “—” column is for Pokémon without a second type (<code>blank</code>). The resulting row is the same as that type’s row in the final table.{% endif %}</figcaption>
+</figure>

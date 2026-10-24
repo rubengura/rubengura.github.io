@@ -1,0 +1,26 @@
+{%- comment -%}
+  A playable game against the computer, on the same board. Each question
+  shows its variance over the cards still standing. Driven by
+  assets/js/notes/guess-who.js; hidden without JavaScript.
+{%- endcomment -%}
+{%- assign es = false %}{% if page.lang == 'es-ES' %}{% assign es = true %}{% endif -%}
+{%- assign s = site.data.guess_who.strategy -%}
+<figure class="gw-window gw-game gw-needs-js" data-gw="game">
+  <div class="gw-window__bar" aria-hidden="true"><span></span><span></span><span></span><span class="gw-window__title">{% if es %}quien_es_quien.exe{% else %}guess_who.exe{% endif %}</span></div>
+  <div class="gw-game__status">
+    <p class="gw-game__msg" data-out="msg" aria-live="polite"></p>
+    <p class="gw-game__count">{% if es %}Preguntas{% else %}Questions{% endif %} <strong data-out="asked">0</strong> · {% if es %}Cartas{% else %}Cards{% endif %} <strong data-out="left">20</strong></p>
+  </div>
+  {% if es %}{% capture label %}Tablero de la partida{% endcapture %}{% else %}{% capture label %}Game board{% endcapture %}{% endif %}
+  {% include notes/guess-who/board.html label=label %}
+  <div class="gw-game__questions" role="group" aria-label="{% if es %}Preguntas{% else %}Questions{% endif %}">
+    {%- for q in site.data.guess_who.questions %}
+    <button type="button" class="gw-q" data-key="{{ q.key }}"><span class="gw-q__text">{% if es %}{{ q.es }}{% else %}{{ q.en }}{% endif %}</span><span class="gw-q__meta" aria-hidden="true"><span class="gw-q__bar"></span><span class="gw-q__var"></span></span></button>
+    {%- endfor %}
+  </div>
+  <div class="gw-game__actions">
+    <button type="button" class="gw-button gw-button--primary" data-action="auto">▶ {% if es %}Que juegue la varianza{% else %}Let variance play{% endif %}</button>
+    <button type="button" class="gw-button" data-action="new">{% if es %}Nueva partida{% else %}New game{% endif %}</button>
+  </div>
+  <figcaption>{% if es %}Cada botón muestra la varianza de su pregunta con las cartas que quedan en pie, y la más alta brilla. Jugando siempre la pregunta de mayor varianza se encuentra a cualquier personaje de este tablero en {{ s.variance.mean }} preguntas de media ({{ s.variance.max }} como mucho); empezando por las más específicas hacen falta {{ s.specific.mean }} de media, y hasta {{ s.specific.max }}.{% else %}Each button shows its question’s variance over the cards still standing, and the highest one glows. Always asking the highest-variance question finds anyone on this board in {{ s.variance.mean }} questions on average ({{ s.variance.max }} at most); starting with the most specific ones takes {{ s.specific.mean }} on average, and up to {{ s.specific.max }}.{% endif %}</figcaption>
+</figure>

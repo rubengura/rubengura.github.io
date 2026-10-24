@@ -1,0 +1,473 @@
+/* ==========================================================================
+   Note: indexes in SQL
+   Components for this note only, loaded through `extra_css`. They use the
+   site's tokens (assets/css/main.css). Script: assets/js/notes/indexes.js,
+   which adds .is-live to each [data-ix] block when it scrolls into view.
+   Everything is readable without JavaScript, except the race (.ix-needs-js).
+   ========================================================================== */
+
+:root {
+  /* Book-cloth colours for the spines: the only colours outside the site's
+     palette, because books on a shelf aren't phosphor green. */
+  --ix-c0: #8c3b3b;
+  --ix-c1: #2f6b58;
+  --ix-c2: #3b527f;
+  --ix-c3: #9a7a3e;
+  --ix-c4: #66437a;
+  --ix-c5: #a89b78;
+  --ix-c6: #4a5a60;
+  --ix-c7: #a85a32;
+}
+
+html:not(.js) .ix-needs-js {
+  display: none;
+}
+
+.prose > [data-ix] {
+  margin-block: 2em;
+}
+
+.prose figure figcaption {
+  margin-top: var(--space-3);
+  color: var(--graphite);
+  font-family: var(--font-sans);
+  font-size: var(--text-xs);
+  line-height: 1.5;
+}
+
+
+/* Windows -------------------------------------------------------------------- */
+
+.ix-window {
+  border: 1px solid var(--rule-strong);
+  border-radius: var(--radius);
+  background: var(--tint);
+  font-family: var(--font-sans);
+  font-size: var(--text-sm);
+  line-height: 1.5;
+}
+
+.ix-window > :not(.ix-window__bar) {
+  margin-inline: var(--space-4);
+}
+
+.ix-window > :last-child {
+  margin-bottom: var(--space-4);
+}
+
+.ix-window__bar {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: var(--space-3);
+  padding: var(--space-2) var(--space-3);
+  border-bottom: 1px solid var(--rule-strong);
+}
+
+.ix-window__bar > span:not(.ix-window__title) {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+}
+
+.ix-window__bar > span:nth-child(1) { background: var(--magenta); }
+.ix-window__bar > span:nth-child(2) { background: var(--accent); }
+.ix-window__bar > span:nth-child(3) { background: var(--phosphor); }
+
+.ix-window__title {
+  margin-inline-start: auto;
+  color: var(--graphite);
+  font-family: var(--font-display);
+  font-size: var(--led-xs);
+}
+
+.ix-button {
+  margin-top: var(--space-3);
+  padding: 0.4em 0.85em;
+  border: 1px solid var(--accent);
+  border-radius: var(--radius);
+  background: transparent;
+  color: var(--accent);
+  font: inherit;
+  font-size: var(--text-xs);
+  cursor: pointer;
+}
+
+.ix-button:hover {
+  background: color-mix(in srgb, var(--accent) 15%, transparent);
+}
+
+.ix-readout {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-1) var(--space-6);
+  margin-top: var(--space-3);
+}
+
+.ix-key {
+  color: var(--graphite);
+}
+
+.ix-readout strong {
+  color: var(--phosphor);
+  font-family: var(--font-display);
+  font-size: var(--led-sm);
+  font-weight: 400;
+  font-variant-numeric: tabular-nums;
+}
+
+.ix-status {
+  min-height: 1.5em;
+  margin-top: var(--space-1);
+  color: var(--accent);
+  font-weight: 700;
+}
+
+
+/* Unsorted shelves -------------------------------------------------------------- */
+
+.ix-scene {
+  position: relative;
+  padding-top: 2.25rem;
+}
+
+.ix-shelves {
+  display: grid;
+  gap: 2.25rem;
+}
+
+.ix-shelf {
+  display: grid;
+  grid-template-columns: repeat(25, minmax(0, 1fr));
+  align-items: end;
+  gap: 3px;
+  height: 3.6rem;
+  padding: 0 4px;
+  border-bottom: 5px solid #5a4632;
+  box-shadow: 0 3px 0 -1px #3b2e21;
+}
+
+.ix-spine {
+  position: relative;
+  height: var(--h);
+  border-radius: 2px 2px 0 0;
+  background: var(--spine);
+  box-shadow: inset -2px 0 0 rgb(0 0 0 / 0.25), inset 0 6px 0 -3px rgb(255 255 255 / 0.18);
+  transition: opacity 200ms ease, filter 200ms ease;
+}
+
+.ix-c0 { --spine: var(--ix-c0); }
+.ix-c1 { --spine: var(--ix-c1); }
+.ix-c2 { --spine: var(--ix-c2); }
+.ix-c3 { --spine: var(--ix-c3); }
+.ix-c4 { --spine: var(--ix-c4); }
+.ix-c5 { --spine: var(--ix-c5); }
+.ix-c6 { --spine: var(--ix-c6); }
+.ix-c7 { --spine: var(--ix-c7); }
+
+/* Checked, found, and checked after finding it */
+.ix-spine.is-checked {
+  opacity: 0.35;
+}
+
+.ix-spine.is-current {
+  outline: 2px solid var(--accent);
+  outline-offset: 1px;
+}
+
+.ix-spine.is-found,
+html:not(.js) .ix-spine[data-target] {
+  opacity: 1;
+  background: var(--accent);
+  box-shadow: 0 0 14px var(--accent);
+}
+
+.ix-spine.is-after {
+  opacity: 0.35;
+  filter: grayscale(1);
+}
+
+/* The robot, borrowed from the header */
+.ix-robot {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 1.9rem;
+  height: 1.9rem;
+  pointer-events: none;
+  transition: transform 60ms linear;
+}
+
+.ix-robot .robot {
+  width: 100%;
+  height: 100%;
+}
+
+
+/* A million books --------------------------------------------------------------- */
+
+.ix-sea {
+  display: block;
+  width: calc(100% - 2 * var(--space-4));
+  height: auto;
+  border-radius: 2px;
+  image-rendering: pixelated;
+}
+
+.ix-big {
+  margin-top: var(--space-3);
+  color: var(--ink);
+}
+
+.ix-big strong {
+  color: var(--accent);
+  font-family: var(--font-display);
+  font-size: var(--led-lg);
+  font-weight: 400;
+  font-variant-numeric: tabular-nums;
+  text-shadow: var(--glow);
+}
+
+.ix-fact {
+  margin-top: var(--space-2);
+}
+
+.ix-fact strong {
+  color: var(--magenta);
+}
+
+
+/* The sorted library --------------------------------------------------------------- */
+
+.prose .ix-letters {
+  display: grid;
+  grid-template-columns: repeat(13, minmax(0, 1fr));
+  gap: 4px;
+  padding: 0;
+  list-style: none;
+}
+
+.prose .ix-letters li + li {
+  margin-top: 0;
+}
+
+.ix-letters li {
+  display: grid;
+  place-items: center;
+  height: 2rem;
+  border: 1px solid var(--rule);
+  border-radius: 3px;
+  color: var(--rule-strong);
+  font-family: var(--font-display);
+  font-size: var(--led-sm);
+}
+
+.ix-letters li.has-books {
+  border-color: var(--rule-strong);
+  background: var(--paper);
+  color: var(--graphite);
+}
+
+.ix-letters li.is-current {
+  border-color: var(--accent);
+  color: var(--accent);
+  box-shadow: 0 0 12px -2px var(--accent);
+}
+
+.ix-letters li.is-passed {
+  color: var(--ink);
+}
+
+.ix-letters li[data-letter="G"].is-open,
+html:not(.js) .ix-letters li[data-letter="G"] {
+  border-color: var(--accent);
+  background: var(--accent);
+  color: var(--paper);
+}
+
+.ix-shelf-title {
+  margin-top: var(--space-4);
+  color: var(--graphite);
+  font-family: var(--font-display);
+  font-size: var(--led-xs);
+}
+
+.prose .ix-gshelf {
+  display: grid;
+  gap: 3px;
+  margin-top: var(--space-2);
+  padding: 0;
+  list-style: none;
+  counter-reset: g;
+}
+
+.prose .ix-gshelf li + li {
+  margin-top: 0;
+}
+
+.ix-gshelf li {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0 var(--space-3);
+  padding: 4px var(--space-3);
+  border-inline-start: 4px solid var(--rule-strong);
+  border-radius: 2px;
+  background: var(--paper);
+  font-size: var(--text-xs);
+  transition: border-color 150ms ease, background-color 150ms ease;
+}
+
+.ix-gbook__author {
+  color: var(--ink);
+  font-weight: 700;
+}
+
+.ix-gbook__title {
+  color: var(--graphite);
+  font-style: italic;
+}
+
+.ix-gshelf li.is-current {
+  border-inline-start-color: var(--accent);
+  background: color-mix(in srgb, var(--accent) 12%, var(--paper));
+}
+
+.ix-gshelf li.is-checked {
+  opacity: 0.45;
+}
+
+.ix-gshelf li.is-found,
+html:not(.js) .ix-gshelf li[data-target] {
+  border-inline-start-color: var(--accent);
+  background: color-mix(in srgb, var(--accent) 22%, var(--paper));
+  box-shadow: 0 0 14px -4px var(--accent);
+}
+
+.ix-gshelf li.is-found .ix-gbook__title,
+html:not(.js) .ix-gshelf li[data-target] .ix-gbook__title {
+  color: var(--accent);
+}
+
+
+/* The race ------------------------------------------------------------------------- */
+
+.ix-race__controls {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: center;
+  gap: var(--space-1) var(--space-3);
+}
+
+.ix-race__controls label {
+  grid-column: 1 / -1;
+  color: var(--ink);
+  font-weight: 700;
+}
+
+.ix-race__controls input {
+  width: 100%;
+  accent-color: var(--accent);
+}
+
+.ix-race__size {
+  min-width: 10ch;
+  color: var(--accent);
+  font-family: var(--font-display);
+  font-size: var(--led-sm);
+  text-align: end;
+  font-variant-numeric: tabular-nums;
+}
+
+.ix-lane {
+  display: grid;
+  grid-template-columns: 7rem 1fr;
+  grid-template-areas: "name track" ". value";
+  align-items: center;
+  gap: 2px var(--space-3);
+  margin-top: var(--space-3);
+}
+
+.ix-lane__name {
+  grid-area: name;
+  font-weight: 700;
+}
+
+.ix-lane__track {
+  grid-area: track;
+  height: 0.9rem;
+  border-radius: 2px;
+  background: var(--paper);
+}
+
+.ix-lane__bar {
+  display: block;
+  width: calc(var(--w, 0) * 100%);
+  min-width: 3px;
+  height: 100%;
+  border-radius: 2px;
+  transition: width 120ms linear;
+}
+
+.ix-lane--scan .ix-lane__name { color: var(--magenta); }
+.ix-lane--scan .ix-lane__bar { background: var(--magenta); box-shadow: 0 0 10px -2px var(--magenta); }
+.ix-lane--index .ix-lane__name { color: var(--cyan); }
+.ix-lane--index .ix-lane__bar { background: var(--cyan); box-shadow: 0 0 10px -2px var(--cyan); }
+
+.ix-lane__value {
+  grid-area: value;
+  color: var(--graphite);
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+}
+
+.ix-ratio {
+  margin-top: var(--space-3);
+  color: var(--accent);
+  font-weight: 700;
+}
+
+
+/* Motion ------------------------------------------------------------------------------ */
+
+@media (prefers-reduced-motion: no-preference) {
+  .js [data-ix] {
+    --live: paused;
+  }
+
+  .js [data-ix].is-live {
+    --live: running;
+  }
+
+  .ix-spine.is-found {
+    animation: ix-found 700ms var(--ease-spring);
+  }
+
+  .ix-gshelf li.is-found {
+    animation: ix-found-row 700ms var(--ease-spring);
+  }
+
+  .ix-robot.is-hopping {
+    animation: ix-hop 300ms ease;
+  }
+
+  .js [data-ix="million"] .ix-fact {
+    animation: ix-fade 600ms ease 1800ms both var(--live);
+  }
+}
+
+@keyframes ix-found {
+  40% { transform: translateY(-10px); }
+}
+
+@keyframes ix-found-row {
+  40% { transform: scale(1.03); }
+}
+
+@keyframes ix-hop {
+  50% { margin-top: -6px; }
+}
+
+@keyframes ix-fade {
+  from { opacity: 0; transform: translateY(6px); }
+}

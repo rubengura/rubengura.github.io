@@ -73,7 +73,11 @@ extra_css: /assets/css/notes/note-name.css
 extra_js: /assets/js/notes/note-name.js
 ```
 
-Reusable pieces of a note go in `_includes/notes/note-name/`, and any data it needs in `_data/`. The p-value note is the example: its figures come from `scripts/notes/p_value_data.py` (simulated, seeded data), and its widgets work in both languages because the includes read `page.lang`.
+Either can be a list, so a series can share styles: the dbt note loads `[/assets/css/notes/pivot.css, /assets/css/notes/dbt-pivot.css]`.
+
+Notes that show Jinja or Liquid code (`{{ … }}`, `{% … %}`) must wrap it in `{% raw %}` … `{% endraw %}`, or Jekyll will try to run it.
+
+Reusable pieces of a note go in `_includes/notes/note-name/`, and any data it needs in `_data/`. Two notes work this way. The p-value note's figures come from `scripts/notes/p_value_data.py` (simulated, seeded data). The "Guess Who?" note's board, questions, sprites and strategy figures all come from `scripts/notes/guess_who_data.py`: change a character there and rerun it. The pivot-table note runs its two queries on the real Kaggle dataset with `scripts/notes/pivot_data.py path/to/Pokemon.csv` (the CSV isn't kept in the repository; download it from Kaggle). The dbt note's figures come from `scripts/notes/dbt_pivot_data.py`, which reads the data the pivot script already wrote. The indexes note's library (100 real books, shuffled with a fixed seed) comes from `scripts/notes/library_data.py`. In all of them, the widgets work in both languages because the includes read `page.lang`.
 
 ## Add a project
 

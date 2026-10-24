@@ -1,0 +1,19 @@
+{%- comment -%}
+  The unsorted library: the site's robot checks the 100 spines one by one.
+  Without JavaScript, the shelves and the result are shown as they end.
+{%- endcomment -%}
+{%- assign es = false %}{% if page.lang == 'es-ES' %}{% assign es = true %}{% endif -%}
+{%- assign lib = site.data.library -%}
+<figure class="ix-window ix-scan" data-ix="scan">
+  <div class="ix-window__bar" aria-hidden="true"><span></span><span></span><span></span><span class="ix-window__title">{% if es %}libros · sin índice{% else %}books · no index{% endif %}</span></div>
+  <div class="ix-scene">
+    {% include notes/indexes/shelf.html %}
+  </div>
+  <div class="ix-readout">
+    <p><span class="ix-key">{% if es %}Libros mirados{% else %}Books checked{% endif %}</span> <strong data-out="looked">{{ lib.books }}</strong>/{{ lib.books }}</p>
+    <p><span class="ix-key">{% if es %}Tiempo{% else %}Time{% endif %}</span> <strong data-out="time">2 min</strong></p>
+  </div>
+  <p class="ix-status" data-out="status" aria-live="polite">{% if es %}Encontrado en la posición {{ lib.target_position }}, pero la consulta lee las {{ lib.books }} filas.{% else %}Found at position {{ lib.target_position }}, but the query reads all {{ lib.books }} rows.{% endif %}</p>
+  <button type="button" class="ix-button ix-needs-js" data-action="replay">↻ {% if es %}Otra vez{% else %}Again{% endif %}</button>
+  <figcaption>{% if es %}Cada lomo es un libro (pasa el ratón por encima para ver cuál), a unos 1,2 segundos por libro: los «un par de minutos» del texto. Al encontrarlo, tú paras; SQL sin índice sigue hasta la última fila, porque no puede saber si hay otro ejemplar más adelante. Es lo que en un plan de ejecución aparece como <code>Seq Scan</code>.{% else %}Each spine is a book (hover to see which), at about 1.2 seconds a book: the “couple of minutes” in the text. When you find it, you stop; SQL without an index carries on to the last row, because it can’t know whether there’s another copy further along. In a query plan, that’s a <code>Seq Scan</code>.{% endif %}</figcaption>
+</figure>

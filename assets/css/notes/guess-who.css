@@ -1,0 +1,706 @@
+/* ==========================================================================
+   Note: winning at "Guess Who?" with statistics
+   Components for this note only, loaded through `extra_css`. They use the
+   site's tokens (assets/css/main.css). Script: assets/js/notes/guess-who.js,
+   which adds .is-live to each [data-gw] block when it scrolls into view.
+   Everything is readable without JavaScript, except the game (.gw-needs-js).
+   ========================================================================== */
+
+:root {
+  /* Sprite colours: the only colours outside the site's palette, because
+     faces and hair need them. */
+  --gw-skin: #e9b98f;
+  --gw-eye: #1b1b1b;
+  --gw-mouth: #b5574b;
+  --gw-blond: #ffd166;
+  --gw-dark: #8a5a35;
+  --gw-red: #e8643c;
+  --gw-white: #e8e8e8;
+}
+
+html:not(.js) .gw-needs-js {
+  display: none;
+}
+
+.prose > [data-gw] {
+  margin-block: 2em;
+}
+
+.prose figure figcaption {
+  margin-top: var(--space-3);
+  color: var(--graphite);
+  font-family: var(--font-sans);
+  font-size: var(--text-xs);
+  line-height: 1.5;
+}
+
+.gw-sprites {
+  position: absolute;
+  width: 0;
+  height: 0;
+  overflow: hidden;
+}
+
+
+/* Pixel sprites -------------------------------------------------------------- */
+
+.gw-px--skin { fill: var(--gw-skin); }
+.gw-px--eye { fill: var(--gw-eye); }
+.gw-px--mouth { fill: var(--gw-mouth); }
+.gw-px--blond { fill: var(--gw-blond); }
+.gw-px--dark { fill: var(--gw-dark); }
+.gw-px--red { fill: var(--gw-red); }
+.gw-px--white { fill: var(--gw-white); }
+.gw-px--glasses { fill: var(--cyan); }
+.gw-px--hat { fill: var(--magenta); }
+.gw-px--earring { fill: var(--accent); }
+.gw-px--shirt1 { fill: var(--phosphor); }
+.gw-px--shirt2 { fill: var(--cyan); }
+.gw-px--shirt3 { fill: var(--graphite); }
+.gw-px--shirt4 { fill: var(--accent); }
+
+
+/* The board ------------------------------------------------------------------ */
+
+.prose .gw-board {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: var(--space-2);
+  padding: var(--space-3);
+  border: 3px double var(--rule-strong);
+  border-radius: 6px;
+  background: var(--paper);
+  list-style: none;
+  perspective: 900px;
+}
+
+.prose .gw-board li + li {
+  margin-top: 0;
+}
+
+.gw-card {
+  min-width: 0;
+}
+
+.gw-card__inner {
+  display: grid;
+  transform-style: preserve-3d;
+}
+
+.gw-card__face,
+.gw-card__back {
+  grid-area: 1 / 1;
+  border: 1px solid var(--rule-strong);
+  border-radius: var(--radius);
+  backface-visibility: hidden;
+}
+
+.gw-card__face {
+  display: grid;
+  justify-items: center;
+  gap: 2px;
+  padding: 6px 4px 4px;
+  background: var(--tint);
+}
+
+.prose .gw-card__sprite {
+  display: block;
+  width: 100%;
+  max-width: 64px;
+  height: auto;
+  shape-rendering: crispEdges;
+}
+
+.gw-card__name {
+  max-width: 100%;
+  overflow: hidden;
+  color: var(--ink);
+  font-family: var(--font-display);
+  font-size: var(--led-xs);
+  line-height: 1.2;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* Face down: a card back with a question mark */
+.gw-card__back {
+  display: grid;
+  place-items: center;
+  transform: rotateY(180deg);
+  background:
+    repeating-linear-gradient(45deg, transparent 0 6px, color-mix(in srgb, var(--phosphor) 12%, transparent) 6px 8px),
+    var(--paper);
+}
+
+.gw-card__back::after {
+  content: "?";
+  color: var(--rule-strong);
+  font-family: var(--font-display);
+  font-size: var(--led-md);
+}
+
+.gw-card.is-down .gw-card__inner {
+  transform: rotateY(180deg);
+}
+
+/* Highlighted cards (the glasses example) */
+/* Glows go on the card itself, not on the face that turns in 3D: a shadow
+   inside a 3D transform can paint stray lines in some browsers. */
+.gw-card {
+  border-radius: var(--radius);
+}
+
+.gw-card.is-marked {
+  box-shadow: 0 0 12px -2px var(--cyan);
+}
+
+.gw-card.is-marked .gw-card__face {
+  border-color: var(--cyan);
+}
+
+.gw-board:has(.is-marked) .gw-card:not(.is-marked) {
+  opacity: 0.4;
+}
+
+/* The last card standing in the game */
+.gw-card.is-winner {
+  box-shadow: 0 0 18px -2px var(--accent);
+}
+
+.gw-card.is-winner .gw-card__face {
+  border-color: var(--accent);
+}
+
+
+/* A short exchange, like an RPG text box ------------------------------------- */
+
+.gw-dialog {
+  margin-bottom: var(--space-3);
+  padding: var(--space-3) var(--space-4);
+  border: 3px double var(--phosphor);
+  border-radius: 6px;
+  background: var(--paper);
+  font-family: var(--font-sans);
+  font-size: var(--text-sm);
+}
+
+.gw-dialog p + p {
+  margin-top: var(--space-1);
+}
+
+.gw-dialog__who {
+  margin-inline-end: var(--space-2);
+  color: var(--accent);
+  font-family: var(--font-display);
+  font-size: var(--led-xs);
+}
+
+
+/* Yes / no split -------------------------------------------------------------- */
+
+.gw-split {
+  margin-top: var(--space-3);
+  font-family: var(--font-sans);
+  font-size: var(--text-sm);
+}
+
+.gw-split__bar {
+  display: flex;
+  height: 2rem;
+  overflow: hidden;
+  border-radius: var(--radius);
+  font-family: var(--font-display);
+  font-size: var(--led-xs);
+}
+
+.gw-split__bar > span {
+  display: grid;
+  place-items: center;
+  flex: var(--share) 0 0;
+  color: var(--paper);
+}
+
+.gw-split__yes { background: var(--cyan); }
+.gw-split__no { background: var(--rule-strong); color: var(--ink) !important; }
+
+.gw-split__legend {
+  display: flex;
+  justify-content: space-between;
+  margin-top: var(--space-1);
+  color: var(--graphite);
+}
+
+
+/* Formula and calculator ------------------------------------------------------- */
+
+.gw-formula {
+  padding: var(--space-4);
+  border: 1px solid var(--rule-strong);
+  border-radius: var(--radius);
+  background: var(--tint);
+  color: var(--phosphor);
+  font-family: var(--font-display);
+  font-size: var(--led-sm);
+  text-align: center;
+  text-shadow: var(--glow);
+}
+
+.gw-formula .gw-x {
+  color: var(--accent);
+}
+
+.gw-calc {
+  padding: var(--space-3) var(--space-4);
+  border: 1px solid var(--rule-strong);
+  border-radius: var(--radius);
+  background: var(--paper);
+  font-family: var(--font-mono);
+  font-size: 0.95rem;
+}
+
+.gw-calc__prompt {
+  margin-inline-end: 0.6ch;
+  color: var(--accent);
+}
+
+.gw-calc__result {
+  color: var(--cyan);
+  font-weight: 700;
+}
+
+
+/* Questions table -------------------------------------------------------------- */
+
+.gw-table {
+  overflow-x: auto;
+}
+
+.prose .gw-table table {
+  font-size: var(--text-xs);
+}
+
+.prose .gw-table th[scope="row"] {
+  font-weight: 400;
+}
+
+.gw-table tr.is-best th,
+.gw-table tr.is-best td {
+  color: var(--accent);
+  font-weight: 700;
+}
+
+.gw-best {
+  white-space: nowrap;
+}
+
+.gw-muted {
+  color: var(--graphite);
+}
+
+.gw-var {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-variant-numeric: tabular-nums;
+}
+
+.gw-var__bar {
+  display: inline-block;
+  width: calc(var(--var) / 0.25 * 4rem);
+  height: 0.6rem;
+  border-radius: 2px;
+  background: var(--cyan);
+  transform-origin: left;
+}
+
+tr.is-best .gw-var__bar {
+  background: var(--accent);
+  box-shadow: 0 0 8px var(--accent);
+}
+
+
+/* Variance curve -------------------------------------------------------------- */
+
+.gw-curve {
+  display: block;
+  width: 100%;
+  height: auto;
+  overflow: visible;
+  font-family: var(--font-sans);
+}
+
+.gw-curve__grid { stroke: var(--rule); }
+
+.gw-curve__tick,
+.gw-curve__axis {
+  fill: var(--graphite);
+  font-size: 12px;
+}
+
+.gw-curve__line {
+  fill: none;
+  stroke: var(--phosphor);
+  stroke-width: 2.5;
+  filter: drop-shadow(0 0 4px color-mix(in srgb, var(--phosphor) 50%, transparent));
+}
+
+.gw-curve__point circle {
+  fill: var(--paper);
+  stroke: var(--cyan);
+  stroke-width: 2.5;
+}
+
+.gw-curve__point text {
+  fill: var(--cyan);
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.gw-curve__point--best circle {
+  fill: var(--accent);
+  stroke: var(--accent);
+}
+
+.gw-curve__point--best text {
+  fill: var(--accent);
+  font-size: 14px;
+}
+
+
+/* The game ---------------------------------------------------------------------- */
+
+.gw-window {
+  border: 1px solid var(--rule-strong);
+  border-radius: var(--radius);
+  background: var(--tint);
+  font-family: var(--font-sans);
+  font-size: var(--text-sm);
+  line-height: 1.5;
+}
+
+.gw-window > :not(.gw-window__bar) {
+  margin-inline: var(--space-4);
+}
+
+.gw-window > :last-child {
+  margin-bottom: var(--space-4);
+}
+
+.gw-window__bar {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: var(--space-3);
+  padding: var(--space-2) var(--space-3);
+  border-bottom: 1px solid var(--rule-strong);
+}
+
+.gw-window__bar > span:not(.gw-window__title) {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+}
+
+.gw-window__bar > span:nth-child(1) { background: var(--magenta); }
+.gw-window__bar > span:nth-child(2) { background: var(--accent); }
+.gw-window__bar > span:nth-child(3) { background: var(--phosphor); }
+
+.gw-window__title {
+  margin-inline-start: auto;
+  color: var(--graphite);
+  font-family: var(--font-display);
+  font-size: var(--led-xs);
+}
+
+.gw-game__status {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: var(--space-1) var(--space-4);
+  margin-bottom: var(--space-3);
+}
+
+.gw-game__msg {
+  min-height: 1.5em;
+  color: var(--ink);
+  font-weight: 700;
+}
+
+.gw-game__msg.is-win {
+  color: var(--accent);
+}
+
+.gw-game__count {
+  color: var(--graphite);
+}
+
+.gw-game__count strong {
+  color: var(--phosphor);
+  font-family: var(--font-display);
+  font-size: var(--led-sm);
+  font-weight: 400;
+}
+
+.gw-game__questions {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(14rem, 1fr));
+  gap: var(--space-2);
+  margin-top: var(--space-3);
+}
+
+.gw-q {
+  display: grid;
+  gap: 4px;
+  padding: var(--space-2) var(--space-3);
+  border: 1px solid var(--rule-strong);
+  border-radius: var(--radius);
+  background: var(--paper);
+  color: var(--ink);
+  font: inherit;
+  font-size: var(--text-xs);
+  text-align: start;
+  cursor: pointer;
+}
+
+.gw-q:hover:not(:disabled) {
+  border-color: var(--accent);
+}
+
+.gw-q:disabled {
+  opacity: 0.35;
+  cursor: default;
+}
+
+.gw-q__meta {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  color: var(--graphite);
+  font-variant-numeric: tabular-nums;
+}
+
+.gw-q__bar {
+  flex: none;
+  width: calc(var(--var, 0) / 0.25 * 5rem);
+  height: 0.45rem;
+  border-radius: 2px;
+  background: var(--cyan);
+  transition: width 400ms var(--ease-out);
+}
+
+.gw-q.is-best {
+  border-color: var(--accent);
+  box-shadow: 0 0 12px -4px var(--accent);
+}
+
+.gw-q.is-best .gw-q__bar {
+  background: var(--accent);
+}
+
+.gw-game__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  margin-top: var(--space-3);
+}
+
+.gw-button {
+  padding: 0.45em 0.9em;
+  border: 1px solid var(--accent);
+  border-radius: var(--radius);
+  background: transparent;
+  color: var(--accent);
+  font: inherit;
+  cursor: pointer;
+}
+
+.gw-button:hover {
+  background: color-mix(in srgb, var(--accent) 15%, transparent);
+}
+
+.gw-button--primary {
+  background: var(--accent);
+  color: var(--paper);
+}
+
+.gw-button--primary:hover {
+  background: var(--accent-hover);
+}
+
+.gw-button:disabled {
+  opacity: 0.4;
+  cursor: default;
+}
+
+
+/* Takeaway ----------------------------------------------------------------------- */
+
+.gw-takeaway {
+  padding: var(--space-4);
+  border: 1px solid var(--accent);
+  border-radius: var(--radius);
+  background: color-mix(in srgb, var(--accent) 8%, var(--paper));
+  box-shadow: 0 0 18px -8px var(--accent);
+}
+
+.gw-takeaway__badge {
+  display: block;
+  margin-bottom: var(--space-1);
+  color: var(--accent);
+  font-family: var(--font-display);
+  font-size: var(--led-xs);
+}
+
+
+@media (max-width: 30rem) {
+  .prose .gw-board {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    padding: var(--space-2);
+  }
+}
+
+
+/* Motion --------------------------------------------------------------------------
+   Each block starts its animation when the script marks it .is-live. */
+
+@media (prefers-reduced-motion: no-preference) {
+  .js [data-gw] {
+    --live: paused;
+  }
+
+  .js [data-gw].is-live {
+    --live: running;
+  }
+
+  .gw-card__inner {
+    transition: transform 600ms var(--ease-out) calc(var(--n, 0) * 45ms);
+  }
+
+  /* The board: cards are dealt one by one */
+  .js [data-gw="board"] .gw-card {
+    animation: gw-deal 450ms var(--ease-spring) calc(var(--n, 0) * 55ms) both var(--live);
+  }
+
+  /* The example: the men turn face down once you see the answer */
+  .js [data-gw="example"]:not(.is-live) .gw-card.is-down .gw-card__inner {
+    transform: none;
+  }
+
+  .js [data-gw="example"] .gw-card__inner {
+    transition-delay: calc(900ms + var(--n, 0) * 45ms);
+  }
+
+  /* Glasses: the five light up */
+  .js [data-gw="glasses"]:not(.is-live) .gw-card {
+    opacity: 1;
+  }
+
+  .js [data-gw="glasses"] .gw-card {
+    transition: opacity 500ms ease 300ms;
+  }
+
+  .js [data-gw="glasses"] .gw-card.is-marked {
+    animation: gw-pulse 1.6s ease 600ms 2 var(--live);
+  }
+
+  .js [data-gw="glasses"] .gw-split__bar > span {
+    transform: scaleX(0);
+    transform-origin: left;
+    animation: gw-grow-x 900ms var(--ease-out) 900ms forwards var(--live);
+  }
+
+  .js [data-gw="glasses"] .gw-split__no {
+    animation-delay: 1300ms;
+  }
+
+  /* Formula glow */
+  .js [data-gw="formula"] {
+    animation: gw-flicker 1.2s steps(6) both var(--live);
+  }
+
+  /* Table: rows slide in, variance bars grow */
+  .js [data-gw="table"] tbody tr {
+    animation: gw-row 400ms var(--ease-out) calc(var(--i) * 70ms) both var(--live);
+  }
+
+  .js [data-gw="table"] .gw-var__bar {
+    transform: scaleX(0);
+    animation: gw-grow-x 700ms var(--ease-out) calc(300ms + var(--i) * 70ms) forwards var(--live);
+  }
+
+  .js [data-gw="table"] tr.is-best {
+    animation: gw-row 400ms var(--ease-out) both var(--live), gw-pulse-row 1.4s ease 1.2s 2 var(--live);
+  }
+
+  /* Curve: the parabola is drawn, then the questions land on it */
+  .js [data-gw="curve"] .gw-curve__line {
+    stroke-dasharray: 1;
+    stroke-dashoffset: 1;
+    animation: gw-draw 1400ms var(--ease-out) forwards var(--live);
+  }
+
+  .js [data-gw="curve"] .gw-curve__point {
+    animation: gw-fade 400ms ease calc(1200ms + var(--i) * 140ms) both var(--live);
+  }
+
+  .js [data-gw="curve"] .gw-curve__point--best circle {
+    transform-box: fill-box;
+    transform-origin: center;
+    animation: gw-beat 1.2s ease 2.4s infinite var(--live);
+  }
+
+  /* Takeaway: unlocked like an achievement */
+  .js [data-gw="takeaway"] {
+    animation: gw-unlock 700ms var(--ease-spring) both var(--live);
+  }
+}
+
+@keyframes gw-deal {
+  from { opacity: 0; transform: translateY(-14px) rotate(-6deg) scale(0.8); }
+}
+
+@keyframes gw-pulse {
+  50% { box-shadow: 0 0 22px 2px var(--cyan); }
+}
+
+@keyframes gw-pulse-row {
+  50% { background: color-mix(in srgb, var(--accent) 14%, transparent); }
+}
+
+@keyframes gw-grow-x {
+  to { transform: scaleX(1); }
+}
+
+@keyframes gw-row {
+  from { opacity: 0; transform: translateX(-10px); }
+}
+
+@keyframes gw-draw {
+  to { stroke-dashoffset: 0; }
+}
+
+@keyframes gw-fade {
+  from { opacity: 0; transform: translateY(6px); }
+}
+
+@keyframes gw-beat {
+  50% { transform: scale(1.35); }
+}
+
+@keyframes gw-flicker {
+  0% { opacity: 0; }
+  20% { opacity: 0.8; }
+  30% { opacity: 0.2; }
+  60% { opacity: 1; }
+  70% { opacity: 0.6; }
+  100% { opacity: 1; }
+}
+
+@keyframes gw-unlock {
+  0% { opacity: 0; transform: scale(0.85); }
+  60% { opacity: 1; transform: scale(1.03); box-shadow: 0 0 30px -4px var(--accent); }
+}
+
+.gw-q.is-pressed {
+  background: color-mix(in srgb, var(--accent) 22%, var(--paper));
+}

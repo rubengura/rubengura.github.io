@@ -1,0 +1,35 @@
+{%- comment -%} The three versions side by side, like a high-score table. {%- endcomment -%}
+{%- assign es = false %}{% if page.lang == 'es-ES' %}{% assign es = true %}{% endif -%}
+<figure class="dp-score" data-dp="score">
+  <table>
+    <thead>
+      <tr>
+        <th scope="col">{% if es %}Versión{% else %}Version{% endif %}</th>
+        <th scope="col"><code>SUM(CASE…)</code> {% if es %}escritos{% else %}written{% endif %}</th>
+        <th scope="col">{% if es %}Valores escritos a mano{% else %}Values typed by hand{% endif %}</th>
+        <th scope="col">{% if es %}Para añadir un tipo{% else %}To add a type{% endif %}</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr style="--sums: 19; --values: 18; --i: 0">
+        <th scope="row">{% if es %}SQL a mano{% else %}SQL by hand{% endif %}</th>
+        <td><span class="dp-score__bar dp-score__bar--sums" aria-hidden="true"></span>19</td>
+        <td><span class="dp-score__bar dp-score__bar--values" aria-hidden="true"></span>18</td>
+        <td>{% if es %}copiar, pegar y editar una línea{% else %}copy, paste and edit a line{% endif %}</td>
+      </tr>
+      <tr style="--sums: 2; --values: 18; --i: 1">
+        <th scope="row">{% if es %}Bucle de Jinja{% else %}Jinja loop{% endif %}</th>
+        <td><span class="dp-score__bar dp-score__bar--sums" aria-hidden="true"></span>2</td>
+        <td><span class="dp-score__bar dp-score__bar--values" aria-hidden="true"></span>18</td>
+        <td>{% if es %}añadir un valor a la lista{% else %}add a value to the list{% endif %}</td>
+      </tr>
+      <tr class="is-best" style="--sums: 1; --values: 0; --i: 2">
+        <th scope="row"><code>dbt_utils</code> <span class="dp-score__star">★</span></th>
+        <td><span class="dp-score__bar dp-score__bar--sums" aria-hidden="true"></span>1</td>
+        <td><span class="dp-score__bar dp-score__bar--values" aria-hidden="true"></span>0</td>
+        <td>{% if es %}nada: lo detecta solo{% else %}nothing: it finds it{% endif %}</td>
+      </tr>
+    </tbody>
+  </table>
+  <figcaption>{% if es %}Las tres versiones devuelven los mismos recuentos. El único <code>SUM(CASE…)</code> que queda en la versión con <code>dbt_utils</code> es el de la columna <code>blank</code>.{% else %}All three versions return the same counts. The one <code>SUM(CASE…)</code> left in the <code>dbt_utils</code> version is the one for the <code>blank</code> column.{% endif %}</figcaption>
+</figure>

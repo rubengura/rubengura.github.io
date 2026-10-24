@@ -11,13 +11,14 @@
 <link rel="preload" href="{{ '/assets/fonts/rubengura-led.woff2' | relative_url }}" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="{{ '/assets/css/main.css' | relative_url }}?v={{ site.time | date: '%s' }}">
 <script src="{{ '/assets/js/site.js' | relative_url }}?v={{ site.time | date: '%s' }}" defer></script>
-{%- comment %} A note can bring its own styles and script (front matter: extra_css, extra_js) {% endcomment -%}
-{%- if page.extra_css %}
-<link rel="stylesheet" href="{{ page.extra_css | relative_url }}?v={{ site.time | date: '%s' }}">
-{%- endif %}
-{%- if page.extra_js %}
-<script src="{{ page.extra_js | relative_url }}?v={{ site.time | date: '%s' }}" defer></script>
-{%- endif %}
+{%- comment %} A note can bring its own styles and scripts (front matter: extra_css,
+     extra_js), each a path or a list of paths {% endcomment -%}
+{%- for css in page.extra_css %}
+<link rel="stylesheet" href="{{ css | relative_url }}?v={{ site.time | date: '%s' }}">
+{%- endfor %}
+{%- for js in page.extra_js %}
+<script src="{{ js | relative_url }}?v={{ site.time | date: '%s' }}" defer></script>
+{%- endfor %}
 <link rel="icon" href="{{ '/favicon.ico' | relative_url }}" sizes="32x32">
 <link rel="icon" href="{{ '/assets/img/favicon.svg' | relative_url }}" type="image/svg+xml">
 <link rel="apple-touch-icon" href="{{ '/assets/img/apple-touch-icon.png' | relative_url }}">

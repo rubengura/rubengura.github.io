@@ -16,6 +16,18 @@ Rubén wanted the site to be in Spanish by default. Moving the Spanish pages to 
 
 ### 2026-10-21 · Interactive notes
 
+**Code in tutorials is run before it's published.**
+The dbt note's models were compiled and run with dbt (dbt-core 1.12, dbt-duckdb, dbt_utils 1.4) on the same Kaggle data. That's how the note's claims were checked: the Jinja loop compiles to exactly the hand-written query, and the dbt_utils version returns the same counts once nulls are filtered out (without the filter it adds a "None" column of zeros). Points DuckDB can't check, like PostgreSQL folding unquoted names to lower case, are stated as such.
+
+**Wide code may use the room to the right of the text.**
+On wide screens, code blocks (and code-based components, through the `--breakout` token in main.css) extend into the free space right of the reading column, so typical SQL lines don't wrap. Narrow screens keep wrapping, as decided for the first version.
+
+**Query results come from the real data, not from screenshots.**
+The pivot-table note's results (the first rows, the grouped table, the heatmap, the pivot machine) are computed from the Kaggle dataset by `scripts/notes/pivot_data.py`, which also checks it's the dataset the note describes (800 rows, Bulbasaur first, the 18 types). The CSV stays out of the repository; only the derived counts and the name/type columns are kept.
+
+**Generated boards and figures are checked against the text.**
+The "Guess Who?" note's board is invented (original pixel characters, only Liz's name comes from the text). `scripts/notes/guess_who_data.py` asserts that it matches what the note says (20 cards, 10 women, 5 with glasses, Liz without glasses, every character distinguishable) before writing anything, so editing a character can't silently break the article.
+
 **Notes can load their own CSS and JavaScript.**
 `extra_css` and `extra_js` in a note's front matter add a stylesheet and a script to that page only, so a note with charts and simulations doesn't weigh down the rest of the site. First use: the p-value note (`assets/css/notes/p-value.css`, `assets/js/notes/p-value.js`).
 *Guardrails:* the text and the static figures (the histogram is inline SVG generated at build time) work without JavaScript; only the simulations (`.pv-needs-js`) are hidden then. With reduced motion every block shows its final state.

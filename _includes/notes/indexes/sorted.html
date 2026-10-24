@@ -1,0 +1,30 @@
+{%- comment -%}
+  The same library sorted by the author's surname: skim the letters
+  (A… C… E… G), then check the G shelf one book at a time.
+  Data: _data/library.yml (scripts/notes/library_data.py).
+{%- endcomment -%}
+{%- assign es = false %}{% if page.lang == 'es-ES' %}{% assign es = true %}{% endif -%}
+{%- assign lib = site.data.library -%}
+{%- assign alphabet = "A,B,C,D,E,F,G,H,I,J,K,L,M,N,O,P,Q,R,S,T,U,V,W,X,Y,Z" | split: "," -%}
+{%- assign looks = lib.looks_in_g | plus: 4 -%}
+<figure class="ix-window ix-sorted" data-ix="sorted">
+  <div class="ix-window__bar" aria-hidden="true"><span></span><span></span><span></span><span class="ix-window__title">{% if es %}libros · ordenados por autor{% else %}books · sorted by author{% endif %}</span></div>
+  <ol class="ix-letters" aria-label="{% if es %}Estanterías por inicial del autor{% else %}Shelves by the author’s initial{% endif %}">
+    {%- for letter in alphabet %}
+    <li{% if lib.letters contains letter %} class="has-books"{% endif %} data-letter="{{ letter }}">{{ letter }}</li>
+    {%- endfor %}
+  </ol>
+  <p class="ix-shelf-title">{% if es %}Estantería G{% else %}Shelf G{% endif %}</p>
+  <ol class="ix-gshelf">
+    {%- for b in lib.g_shelf %}
+    <li{% if b.target %} data-target="1"{% endif %}><span class="ix-gbook__author">{{ b.author }}</span> <span class="ix-gbook__title">{% if es %}{{ b.es }}{% else %}{{ b.en }}{% endif %}</span></li>
+    {%- endfor %}
+  </ol>
+  <div class="ix-readout">
+    <p><span class="ix-key">{% if es %}Vistazos{% else %}Looks{% endif %}</span> <strong data-out="looks">{{ looks }}</strong></p>
+    <p><span class="ix-key">{% if es %}Tiempo{% else %}Time{% endif %}</span> <strong data-out="time">{{ looks | times: 1.2 | round }} s</strong></p>
+  </div>
+  <p class="ix-status" data-out="status" aria-live="polite">{% if es %}4 letras y {{ lib.looks_in_g }} libros: {{ looks }} vistazos en vez de {{ lib.target_position }}.{% else %}4 letters and {{ lib.looks_in_g }} books: {{ looks }} looks instead of {{ lib.target_position }}.{% endif %}</p>
+  <button type="button" class="ix-button ix-needs-js" data-action="replay">↻ {% if es %}Otra vez{% else %}Again{% endif %}</button>
+  <figcaption>{% if es %}La misma biblioteca de 100 libros, ordenada por el apellido del autor. Las letras apagadas son estanterías vacías.{% else %}The same 100-book library, sorted by the author’s surname. Dimmed letters are empty shelves.{% endif %}</figcaption>
+</figure>

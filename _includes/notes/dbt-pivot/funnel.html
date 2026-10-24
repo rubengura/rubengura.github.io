@@ -1,0 +1,22 @@
+{%- comment -%}
+  What get_column_values does: the second-type column, 414 non-null rows,
+  reduced to 18 distinct values ordered by frequency.
+  Data: _data/dbt_pivot.yml (scripts/notes/dbt_pivot_data.py).
+{%- endcomment -%}
+{%- assign es = false %}{% if page.lang == 'es-ES' %}{% assign es = true %}{% endif -%}
+{%- assign d = site.data.dbt_pivot -%}
+<figure class="pt-window dp-funnel" data-dp="funnel">
+  <div class="pt-window__bar" aria-hidden="true"><span></span><span></span><span></span><span class="pt-window__title">get_column_values()</span></div>
+  <pre class="dp-funnel__sql"><code>select "Type2" as value
+from dwh_dbt.pokemon_stats
+where "Type2" is not null
+group by "Type2"
+order by count(*) desc</code></pre>
+  <div class="dp-funnel__rain" aria-hidden="true"></div>
+  <ol class="dp-funnel__list">
+    {%- for v in d.values %}
+    <li style="--type: var(--t-{{ v.type | downcase }}); --i: {{ forloop.index0 }}; --share: {{ v.n | times: 1.0 | divided_by: d.values.first.n }}"><span class="pt-badge">{{ v.type }}</span><span class="dp-funnel__bar" aria-hidden="true"></span><span class="dp-funnel__n">{{ v.n }}</span></li>
+    {%- endfor %}
+  </ol>
+  <figcaption>{% if es %}Las {{ d.with_second_type }} filas con segundo tipo se reducen a {{ d.values.size }} valores distintos, de más a menos frecuente: es el orden por defecto de <code>get_column_values</code>, así que las columnas de la tabla salen en este orden y no alfabéticamente. Los empates (Ghost, Ice, Rock y Water, con 14 cada uno) no tienen un orden fijo.{% else %}The {{ d.with_second_type }} rows that have a second type come down to {{ d.values.size }} distinct values, most frequent first: that's <code>get_column_values</code>'s default order, so the table's columns come out in this order rather than alphabetically. Ties (Ghost, Ice, Rock and Water, 14 each) have no fixed order.{% endif %}</figcaption>
+</figure>

@@ -1076,6 +1076,26 @@ html:not(.js) .hero__figure {
   font-size: inherit;
 }
 
+/* On wide screens, code blocks may use the free space to the right of the
+   reading column (--breakout), so typical SQL lines (about 70 characters,
+   often aligned on AS) don't wrap. On narrow screens they wrap as before.
+   Notes can give wide components the same room with
+   margin-inline-end: calc(-1 * var(--breakout)). */
+:root {
+  --breakout: 0px;
+}
+
+@media (min-width: 64rem) {
+  :root {
+    --breakout: max(0px, min(100vw, var(--wrap)) - 2 * var(--gutter)
+      - var(--margin-col) - var(--col-gap) - var(--text-col));
+  }
+
+  .prose > .highlighter-rouge {
+    margin-inline-end: calc(-1 * var(--breakout));
+  }
+}
+
 .prose figure img,
 .prose figure svg {
   width: 100%;

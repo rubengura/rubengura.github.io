@@ -1,0 +1,26 @@
+{%- comment -%}
+  The race: looks needed without an index (n) and with one (log2 n), for a
+  library of any size. Driven by assets/js/notes/indexes.js; hidden without
+  JavaScript.
+{%- endcomment -%}
+{%- assign es = false %}{% if page.lang == 'es-ES' %}{% assign es = true %}{% endif -%}
+<figure class="ix-window ix-race ix-needs-js" data-ix="race">
+  <div class="ix-window__bar" aria-hidden="true"><span></span><span></span><span></span><span class="ix-window__title">{% if es %}carrera.exe{% else %}race.exe{% endif %}</span></div>
+  <div class="ix-race__controls">
+    <label for="ix-size">{% if es %}Libros en la biblioteca{% else %}Books in the library{% endif %}</label>
+    <input type="range" id="ix-size" min="1" max="9" step="0.01" value="2">
+    <output for="ix-size" class="ix-race__size">100</output>
+  </div>
+  <div class="ix-lane ix-lane--scan">
+    <span class="ix-lane__name">{% if es %}Sin índice{% else %}No index{% endif %}</span>
+    <span class="ix-lane__track"><span class="ix-lane__bar"></span></span>
+    <span class="ix-lane__value" data-out="scan"></span>
+  </div>
+  <div class="ix-lane ix-lane--index">
+    <span class="ix-lane__name">{% if es %}Con índice{% else %}With an index{% endif %}</span>
+    <span class="ix-lane__track"><span class="ix-lane__bar"></span></span>
+    <span class="ix-lane__value" data-out="index"></span>
+  </div>
+  <p class="ix-ratio" data-out="ratio" aria-live="polite"></p>
+  <figcaption>{% if es %}Vistazos en el peor caso, a 1,2 segundos cada uno; las barras van en escala logarítmica. Sin índice, los vistazos crecen igual que la biblioteca (n); con un índice, como log₂ n, porque cada vistazo descarta la mitad de lo que queda. Es la «Big-O» de la que no queríamos hablar ;). Un índice real (un árbol B) descarta muchas más estanterías en cada paso, así que necesita aún menos. En SQL, ese orden se crea con <code>CREATE INDEX ON libros (autor);</code>{% else %}Looks in the worst case, at 1.2 seconds each; the bars use a logarithmic scale. Without an index, the looks grow just like the library (n); with one, like log₂ n, because each look rules out half of what’s left. That’s the “Big-O” we weren’t going to talk about ;). A real index (a B-tree) rules out many more shelves at each step, so it needs even fewer. In SQL, that order is created with <code>CREATE INDEX ON books (author);</code>{% endif %}</figcaption>
+</figure>

@@ -1,0 +1,9 @@
+{%- comment -%} A million books, one pixel each, and how long checking them would take. {%- endcomment -%}
+{%- assign es = false %}{% if page.lang == 'es-ES' %}{% assign es = true %}{% endif -%}
+<figure class="ix-window ix-million" data-ix="million">
+  <div class="ix-window__bar" aria-hidden="true"><span></span><span></span><span></span><span class="ix-window__title">{% if es %}1.000.000 libros{% else %}1,000,000 books{% endif %}</span></div>
+  <canvas class="ix-sea ix-needs-js" width="2000" height="500" aria-hidden="true"></canvas>
+  <p class="ix-big"><strong data-out="count">{% if es %}1.000.000{% else %}1,000,000{% endif %}</strong> {% if es %}libros{% else %}books{% endif %}</p>
+  <p class="ix-fact">{% if es %}A 1,2 segundos por libro, mirarlos todos lleva <strong>casi 14 días</strong> sin parar a dormir. De media lo encontrarías a mitad de camino: una semana.{% else %}At 1.2 seconds a book, checking them all takes <strong>almost 14 days</strong> without stopping to sleep. On average you’d find it halfway through: a week.{% endif %}</p>
+  <figcaption>{% if es %}Cada píxel de la imagen es un libro.{% else %}Each pixel in the picture is a book.{% endif %}</figcaption>
+</figure>

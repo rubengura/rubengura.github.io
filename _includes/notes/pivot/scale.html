@@ -1,0 +1,16 @@
+{%- comment -%}
+  How the query grows with the number of distinct values to pivot.
+  Driven by assets/js/notes/pivot.js; hidden without JavaScript.
+{%- endcomment -%}
+{%- assign es = false %}{% if page.lang == 'es-ES' %}{% assign es = true %}{% endif -%}
+<figure class="pt-window pt-scale pt-needs-js" data-pt="scale">
+  <div class="pt-window__bar" aria-hidden="true"><span></span><span></span><span></span><span class="pt-window__title">{% if es %}generador_de_consultas.exe{% else %}query_generator.exe{% endif %}</span></div>
+  <div class="pt-scale__controls">
+    <label for="pt-values">{% if es %}Valores distintos en la columna a pivotar{% else %}Distinct values in the column to pivot{% endif %}</label>
+    <input type="range" id="pt-values" min="2" max="200" value="18">
+    <output for="pt-values" class="pt-scale__value">18</output>
+  </div>
+  <p class="pt-scale__lines" aria-live="polite">{% if es %}Tu consulta: <strong data-out="lines">24</strong> líneas, <strong data-out="sums">19</strong> de ellas con <code>SUM(CASE …)</code>{% else %}Your query: <strong data-out="lines">24</strong> lines, <strong data-out="sums">19</strong> of them <code>SUM(CASE …)</code>{% endif %}</p>
+  <pre class="pt-scale__code" aria-hidden="true"><code></code></pre>
+  <figcaption>{% if es %}Con 18 tipos la consulta ya ocupa una pantalla; con 50 o 200 valores, escribirla a mano deja de tener sentido.{% else %}With 18 types the query already fills a screen; with 50 or 200 values, writing it by hand stops making sense.{% endif %}</figcaption>
+</figure>
